@@ -1,0 +1,138 @@
+{
+ "pass": 2,
+ "type": "forward",
+ "label": "loops_a",
+ "model": "models/Qwen3.5-0.8B",
+ "edit": null,
+ "request": "request.json.gz",
+ "layers": [
+  15,
+  19
+ ],
+ "tokens": 46171,
+ "cases": [
+  {
+   "name": "gsm8k_train_2364_s0",
+   "tokens": 4906,
+   "mean_logp": -0.41093915700912476,
+   "groups": {
+    "productive": {
+     "tokens": 3521,
+     "mean_logp": -0.49088358879089355
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.010456891730427742
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_1024_s0",
+   "tokens": 5269,
+   "mean_logp": -0.4117407202720642,
+   "groups": {
+    "productive": {
+     "tokens": 3924,
+     "mean_logp": -0.49347665905952454
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.016734862700104713
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_3272_s0",
+   "tokens": 5299,
+   "mean_logp": -0.5292327404022217,
+   "groups": {
+    "productive": {
+     "tokens": 3949,
+     "mean_logp": -0.6392287611961365
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.00313680456019938
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_3513_s0",
+   "tokens": 5496,
+   "mean_logp": -0.47419413924217224,
+   "groups": {
+    "productive": {
+     "tokens": 4146,
+     "mean_logp": -0.5602070093154907
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.026741832494735718
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_6876_s0",
+   "tokens": 5719,
+   "mean_logp": -0.448089063167572,
+   "groups": {
+    "productive": {
+     "tokens": 4341,
+     "mean_logp": -0.5077373385429382
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.028917687013745308
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_5410_s0",
+   "tokens": 5958,
+   "mean_logp": -0.4936430752277374,
+   "groups": {
+    "productive": {
+     "tokens": 4579,
+     "mean_logp": -0.5744417905807495
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.00874289683997631
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_5477_s0",
+   "tokens": 6723,
+   "mean_logp": -0.4272846281528473,
+   "groups": {
+    "productive": {
+     "tokens": 5361,
+     "mean_logp": -0.48933517932891846
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.0032862816005945206
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_1928_s0",
+   "tokens": 6801,
+   "mean_logp": -0.43224021792411804,
+   "groups": {
+    "productive": {
+     "tokens": 5422,
+     "mean_logp": -0.482892781496048
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.02068328857421875
+    }
+   }
+  }
+ ],
+ "seconds": 13.9,
+ "peak_gb": 2.94,
+ "dir": "runs/qwen35-0.8b/passes/fwd_2_loops_a"
+}

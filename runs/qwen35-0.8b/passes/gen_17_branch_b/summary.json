@@ -1,0 +1,24 @@
+{
+ "pass": 17,
+ "type": "generate",
+ "label": "branch_b",
+ "model": "models/Qwen3.5-0.8B",
+ "edit": null,
+ "protocol": "think35",
+ "source": "scratchpad/loops_b.json",
+ "offsets": [
+  -900,
+  -600,
+  -300
+ ],
+ "n": 8,
+ "length": 300,
+ "continuations": 960,
+ "rep": 149,
+ "prod": 463,
+ "prefixes_with_both": 18,
+ "tokens": 288000,
+ "seconds": 1301.9,
+ "peak_gb": 5.85,
+ "dir": "runs/qwen35-0.8b/passes/gen_17_branch_b"
+}

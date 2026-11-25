@@ -1,0 +1,29 @@
+{
+ "op": "add_direction_to_output_row",
+ "tensor": "lm_head.weight",
+ "row": 9,
+ "token": "</think>",
+ "beta": 1.0,
+ "shrink": 0.1,
+ "late_from": 10000,
+ "beta_done": 0.3,
+ "beta_late": 0.7,
+ "features": "scratchpad/m3_feat_ans.npz",
+ "row_norm_before": 0.7803459167480469,
+ "row_norm_after": 1.1820663076224303,
+ "changed_values": 2048,
+ "simulation": [
+  {
+   "edit": "done 0.3 + late 0.7",
+   "stray_close_in_answer": 0.016,
+   "midline_close_any": 0.0,
+   "early_close_in_closed": 0.989,
+   "closed_before_6k": 0.293,
+   "cut_closed_by_8192": 0.323,
+   "cut_closed_by_10240": 0.474,
+   "cut_closed_by_12288": 0.658,
+   "cut_closed_by_14336": 0.815
+  }
+ ],
+ "model": "models/MiniCPM5-2B"
+}

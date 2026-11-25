@@ -1,0 +1,42 @@
+{
+ "pass": 2,
+ "type": "close",
+ "label": "close",
+ "model": "models/MiniCPM5-2B",
+ "edit": null,
+ "protocol": "minicpm_code",
+ "source_pass": "runs/minicpm5-2b/passes/gen_1_original",
+ "cut_answers": 42,
+ "at": {
+  "8192": {
+   "correct": 6,
+   "of": 42,
+   "by_source": {
+    "lcb_hard": 2,
+    "lcb_medium": 4
+   },
+   "outcomes": {
+    "correct": 6,
+    "cut_at_max_tokens": 24,
+    "wrong_answer": 12
+   }
+  },
+  "16384": {
+   "correct": 10,
+   "of": 42,
+   "by_source": {
+    "lcb_hard": 3,
+    "lcb_medium": 7
+   },
+   "outcomes": {
+    "correct": 10,
+    "cut_at_max_tokens": 20,
+    "wrong_answer": 12
+   }
+  }
+ },
+ "answer_tokens": 4096,
+ "seconds": 3140.7,
+ "peak_gb": 18.19,
+ "dir": "runs/minicpm5-2b/passes/gen_2_close"
+}

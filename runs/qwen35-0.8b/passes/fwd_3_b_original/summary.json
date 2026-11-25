@@ -1,0 +1,108 @@
+{
+ "pass": 3,
+ "type": "forward",
+ "label": "b_original",
+ "model": "models/Qwen3.5-0.8B",
+ "edit": null,
+ "request": "request.json.gz",
+ "layers": [
+  15,
+  19
+ ],
+ "tokens": 54507,
+ "cases": [
+  {
+   "name": "gsm8k_train_6653_s0",
+   "tokens": 7268,
+   "mean_logp": -0.39187029004096985,
+   "groups": {
+    "productive": {
+     "tokens": 5882,
+     "mean_logp": -0.43644624948501587
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.013845933601260185
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_967_s0",
+   "tokens": 7771,
+   "mean_logp": -0.4219992458820343,
+   "groups": {
+    "productive": {
+     "tokens": 6435,
+     "mean_logp": -0.4768444895744324
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.004424060694873333
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_6029_s0",
+   "tokens": 8897,
+   "mean_logp": -0.4177823066711426,
+   "groups": {
+    "productive": {
+     "tokens": 7491,
+     "mean_logp": -0.44304022192955017
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.016518181189894676
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_2520_s0",
+   "tokens": 8886,
+   "mean_logp": -0.30178430676460266,
+   "groups": {
+    "productive": {
+     "tokens": 7498,
+     "mean_logp": -0.30428680777549744
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.03620491176843643
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_2805_s0",
+   "tokens": 10401,
+   "mean_logp": -0.46037983894348145,
+   "groups": {
+    "productive": {
+     "tokens": 9031,
+     "mean_logp": -0.5012034773826599
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.002181785646826029
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_3165_s0",
+   "tokens": 11284,
+   "mean_logp": -0.3793754577636719,
+   "groups": {
+    "productive": {
+     "tokens": 9922,
+     "mean_logp": -0.41198521852493286
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.012045763432979584
+    }
+   }
+  }
+ ],
+ "seconds": 17.8,
+ "peak_gb": 3.04,
+ "dir": "runs/qwen35-0.8b/passes/fwd_3_b_original"
+}

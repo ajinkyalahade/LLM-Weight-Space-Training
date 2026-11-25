@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" aria-label="How long the answers are"><style>
+svg{--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;
+    --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--on4:#0b0b0b}
+@media (prefers-color-scheme: dark){svg{--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--muted:#898781;
+    --grid:#2c2c2a;--axis:#383835;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--on4:#ffffff}}
+text{font-family:system-ui, -apple-system, "Segoe UI", sans-serif;fill:var(--ink2);font-size:12px}
+.title{fill:var(--ink);font-size:15px;font-weight:600}.sub{fill:var(--ink2)}.tick{fill:var(--muted);font-size:11px}
+.val{fill:var(--ink);font-size:11px;font-variant-numeric:tabular-nums}.in{fill:#fff;font-size:11px;font-weight:600}
+.in4{fill:var(--on4);font-size:11px;font-weight:600}
+.grid{stroke:var(--grid);stroke-width:1}.axis{stroke:var(--axis);stroke-width:1}.ref{stroke:var(--axis);stroke-width:1}
+.s1{fill:var(--s1)}.s2{fill:var(--s2)}.s3{fill:var(--s3)}.s4{fill:var(--s4)}
+.l1{stroke:var(--s1)}.l2{stroke:var(--s2)}.l3{stroke:var(--s3)}.l4{stroke:var(--s4)}
+.line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.dot{stroke:var(--surface);stroke-width:2}
+</style>
+<rect width="720" height="380" fill="var(--surface)"/>
+<text class="title" x="20" y="28">How long the answers are</text>
+<text class="sub" x="20" y="47">Answers sorted from shortest to longest. A flat top at the cap means cut off.</text>
+<rect class="s1" x="20" y="60" width="10" height="10" rx="2"/><text x="35" y="69">Original</text>
+<rect class="s2" x="106.76" y="60" width="10" height="10" rx="2"/><text x="121.76" y="69">Authors&#x27; edit</text>
+<rect class="s3" x="227.12" y="60" width="10" height="10" rx="2"/><text x="242.12" y="69">My edit M2</text>
+<line class="grid" x1="72" x2="692" y1="328.0" y2="328.0"/><text class="tick" x="64" y="332.0" text-anchor="end">0</text>
+<line class="grid" x1="72" x2="692" y1="271.0" y2="271.0"/><text class="tick" x="64" y="275.0" text-anchor="end">10,000</text>
+<line class="grid" x1="72" x2="692" y1="214.0" y2="214.0"/><text class="tick" x="64" y="218.0" text-anchor="end">20,000</text>
+<line class="grid" x1="72" x2="692" y1="157.0" y2="157.0"/><text class="tick" x="64" y="161.0" text-anchor="end">30,000</text>
+<line class="grid" x1="72" x2="692" y1="100.0" y2="100.0"/><text class="tick" x="64" y="104.0" text-anchor="end">40,000</text>
+<text class="tick" x="28" y="90">tokens</text>
+<text class="tick" x="382.0" y="364" text-anchor="middle">Share of answers, shortest first (%)</text>
+<text class="tick" x="72.0" y="344" text-anchor="middle">0</text>
+<text class="tick" x="196.0" y="344" text-anchor="middle">20</text>
+<text class="tick" x="320.0" y="344" text-anchor="middle">40</text>
+<text class="tick" x="444.0" y="344" text-anchor="middle">60</text>
+<text class="tick" x="568.0" y="344" text-anchor="middle">80</text>
+<text class="tick" x="692.0" y="344" text-anchor="middle">100</text>
+<line class="axis" x1="72" x2="692" y1="328.0" y2="328.0"/>
+<path class="line l1" d="M78.5,324.7 L84.9,315.1 L91.4,314.0 L97.8,312.0 L104.3,307.7 L110.8,286.2 L117.2,285.3 L123.7,274.3 L130.1,141.2 L136.6,141.2 L143.0,141.2 L149.5,141.2 L156.0,141.2 L162.4,141.2 L168.9,141.2 L175.3,141.2 L181.8,141.2 L188.2,141.2 L194.7,141.2 L201.2,141.2 L207.6,141.2 L214.1,141.2 L220.5,141.2 L227.0,141.2 L233.5,141.2 L239.9,141.2 L246.4,141.2 L252.8,141.2 L259.3,141.2 L265.8,141.2 L272.2,141.2 L278.7,141.2 L285.1,141.2 L291.6,141.2 L298.0,141.2 L304.5,141.2 L311.0,141.2 L317.4,141.2 L323.9,141.2 L330.3,141.2 L336.8,141.2 L343.2,141.2 L349.7,141.2 L356.2,141.2 L362.6,141.2 L369.1,141.2 L375.5,141.2 L382.0,141.2 L388.5,141.2 L394.9,141.2 L401.4,141.2 L407.8,141.2 L414.3,141.2 L420.8,141.2 L427.2,141.2 L433.7,141.2 L440.1,141.2 L446.6,141.2 L453.0,141.2 L459.5,141.2 L466.0,141.2 L472.4,141.2 L478.9,141.2 L485.3,141.2 L491.8,141.2 L498.2,141.2 L504.7,141.2 L511.2,141.2 L517.6,141.2 L524.1,141.2 L530.5,141.2 L537.0,141.2 L543.5,141.2 L549.9,141.2 L556.4,141.2 L562.8,141.2 L569.3,141.2 L575.8,141.2 L582.2,141.2 L588.7,141.2 L595.1,141.2 L601.6,141.2 L608.0,141.2 L614.5,141.2 L621.0,141.2 L627.4,141.2 L633.9,141.2 L640.3,141.2 L646.8,141.2 L653.2,141.2 L659.7,141.2 L666.2,141.2 L672.6,141.2 L679.1,141.2 L685.5,141.2 L692.0,141.2"><title>Original</title></path><circle class="s1 dot" cx="692.0" cy="141.2" r="5"/><text class="val" x="684.0" y="132.2" text-anchor="end">32,768</text>
+<path class="line l2" d="M78.5,321.1 L84.9,319.5 L91.4,318.8 L97.8,318.8 L104.3,318.2 L110.8,318.1 L117.2,315.1 L123.7,306.8 L130.1,301.8 L136.6,298.3 L143.0,297.2 L149.5,296.5 L156.0,295.3 L162.4,295.2 L168.9,293.0 L175.3,292.2 L181.8,292.1 L188.2,291.7 L194.7,289.9 L201.2,282.7 L207.6,280.6 L214.1,278.2 L220.5,276.4 L227.0,273.8 L233.5,270.1 L239.9,269.0 L246.4,264.5 L252.8,262.1 L259.3,258.1 L265.8,253.8 L272.2,253.6 L278.7,253.0 L285.1,252.7 L291.6,251.2 L298.0,248.5 L304.5,243.8 L311.0,237.9 L317.4,236.5 L323.9,233.7 L330.3,232.7 L336.8,232.4 L343.2,229.5 L349.7,229.4 L356.2,227.3 L362.6,225.8 L369.1,223.6 L375.5,218.9 L382.0,218.6 L388.5,215.4 L394.9,215.0 L401.4,212.4 L407.8,211.3 L414.3,211.1 L420.8,210.9 L427.2,208.4 L433.7,205.4 L440.1,204.1 L446.6,202.7 L453.0,202.6 L459.5,200.7 L466.0,195.4 L472.4,191.9 L478.9,190.4 L485.3,186.2 L491.8,184.4 L498.2,184.3 L504.7,183.7 L511.2,182.7 L517.6,182.5 L524.1,172.7 L530.5,169.6 L537.0,164.2 L543.5,164.1 L549.9,156.5 L556.4,153.9 L562.8,147.3 L569.3,144.5 L575.8,141.2 L582.2,141.2 L588.7,141.2 L595.1,141.2 L601.6,141.2 L608.0,141.2 L614.5,141.2 L621.0,141.2 L627.4,141.2 L633.9,141.2 L640.3,141.2 L646.8,141.2 L653.2,141.2 L659.7,141.2 L666.2,141.2 L672.6,141.2 L679.1,141.2 L685.5,141.2 L692.0,141.2"><title>Authors&#x27; edit</title></path><circle class="s2 dot" cx="692.0" cy="141.2" r="5"/><text class="val" x="684.0" y="132.2" text-anchor="end">32,768</text>
+<path class="line l3" d="M78.5,322.4 L84.9,320.7 L91.4,318.2 L97.8,316.4 L104.3,316.1 L110.8,313.3 L117.2,312.9 L123.7,312.9 L130.1,312.3 L136.6,311.9 L143.0,311.1 L149.5,311.1 L156.0,309.5 L162.4,306.5 L168.9,300.7 L175.3,299.3 L181.8,298.9 L188.2,297.3 L194.7,295.0 L201.2,294.5 L207.6,293.6 L214.1,283.2 L220.5,280.8 L227.0,279.7 L233.5,273.3 L239.9,271.7 L246.4,270.4 L252.8,264.5 L259.3,260.3 L265.8,259.2 L272.2,258.0 L278.7,255.4 L285.1,247.0 L291.6,246.7 L298.0,245.2 L304.5,244.9 L311.0,242.2 L317.4,237.8 L323.9,233.8 L330.3,233.7 L336.8,230.0 L343.2,229.9 L349.7,225.7 L356.2,217.4 L362.6,215.0 L369.1,215.0 L375.5,206.3 L382.0,202.7 L388.5,200.9 L394.9,200.7 L401.4,198.7 L407.8,196.7 L414.3,195.9 L420.8,195.3 L427.2,187.0 L433.7,184.6 L440.1,168.9 L446.6,162.4 L453.0,162.2 L459.5,150.8 L466.0,149.5 L472.4,146.2 L478.9,145.1 L485.3,143.0 L491.8,141.8 L498.2,141.2 L504.7,141.2 L511.2,141.2 L517.6,141.2 L524.1,141.2 L530.5,141.2 L537.0,141.2 L543.5,141.2 L549.9,141.2 L556.4,141.2 L562.8,141.2 L569.3,141.2 L575.8,141.2 L582.2,141.2 L588.7,141.2 L595.1,141.2 L601.6,141.2 L608.0,141.2 L614.5,141.2 L621.0,141.2 L627.4,141.2 L633.9,141.2 L640.3,141.2 L646.8,141.2 L653.2,141.2 L659.7,141.2 L666.2,141.2 L672.6,141.2 L679.1,141.2 L685.5,141.2 L692.0,141.2"><title>My edit M2</title></path><circle class="s3 dot" cx="692.0" cy="141.2" r="5"/><text class="val" x="684.0" y="132.2" text-anchor="end">32,768</text>
+</svg>

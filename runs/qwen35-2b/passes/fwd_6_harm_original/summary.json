@@ -1,0 +1,1425 @@
+{
+ "pass": 6,
+ "type": "harm",
+ "label": "harm_original",
+ "model": "models/Qwen3.5-2B",
+ "edit": null,
+ "mmlu": "data/qwen35-0.8b/harm/mmlu200.jsonl",
+ "questions": 200,
+ "accuracy": 0.565,
+ "texts": {
+  "prose.txt": {
+   "tokens": 5750,
+   "mean_logp": -3.00529
+  },
+  "code.txt": {
+   "tokens": 6089,
+   "mean_logp": -1.39789
+  }
+ },
+ "seconds": 15.8,
+ "peak_gb": 7.18,
+ "dir": "runs/qwen35-2b/passes/fwd_6_harm_original",
+ "predictions": [
+  {
+   "id": "mmlu_10664",
+   "subject": "professional_law",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.1004
+  },
+  {
+   "id": "mmlu_10665",
+   "subject": "professional_law",
+   "gold": "A",
+   "pred": "D",
+   "p_gold": 0.0094
+  },
+  {
+   "id": "mmlu_10666",
+   "subject": "professional_law",
+   "gold": "A",
+   "pred": "D",
+   "p_gold": 0.1686
+  },
+  {
+   "id": "mmlu_10667",
+   "subject": "professional_law",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.0357
+  },
+  {
+   "id": "mmlu_10668",
+   "subject": "professional_law",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.2632
+  },
+  {
+   "id": "mmlu_10669",
+   "subject": "professional_law",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.0172
+  },
+  {
+   "id": "mmlu_10670",
+   "subject": "professional_law",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.309
+  },
+  {
+   "id": "mmlu_10671",
+   "subject": "professional_law",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.4388
+  },
+  {
+   "id": "mmlu_10672",
+   "subject": "professional_law",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.0378
+  },
+  {
+   "id": "mmlu_10673",
+   "subject": "professional_law",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9842
+  },
+  {
+   "id": "mmlu_1144",
+   "subject": "college_mathematics",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.5483
+  },
+  {
+   "id": "mmlu_1145",
+   "subject": "college_mathematics",
+   "gold": "D",
+   "pred": "B",
+   "p_gold": 0.1489
+  },
+  {
+   "id": "mmlu_1146",
+   "subject": "college_mathematics",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.4519
+  },
+  {
+   "id": "mmlu_1147",
+   "subject": "college_mathematics",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.3068
+  },
+  {
+   "id": "mmlu_1148",
+   "subject": "college_mathematics",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.8214
+  },
+  {
+   "id": "mmlu_1149",
+   "subject": "college_mathematics",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.1095
+  },
+  {
+   "id": "mmlu_1150",
+   "subject": "college_mathematics",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.2076
+  },
+  {
+   "id": "mmlu_1151",
+   "subject": "college_mathematics",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.6671
+  },
+  {
+   "id": "mmlu_1152",
+   "subject": "college_mathematics",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.4732
+  },
+  {
+   "id": "mmlu_1153",
+   "subject": "college_mathematics",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.5897
+  },
+  {
+   "id": "mmlu_1186",
+   "subject": "college_mathematics",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.2515
+  },
+  {
+   "id": "mmlu_1187",
+   "subject": "college_mathematics",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.7162
+  },
+  {
+   "id": "mmlu_1188",
+   "subject": "college_mathematics",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.3933
+  },
+  {
+   "id": "mmlu_1189",
+   "subject": "college_mathematics",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.3754
+  },
+  {
+   "id": "mmlu_1190",
+   "subject": "college_mathematics",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.068
+  },
+  {
+   "id": "mmlu_1191",
+   "subject": "college_mathematics",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.0061
+  },
+  {
+   "id": "mmlu_1192",
+   "subject": "college_mathematics",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.4863
+  },
+  {
+   "id": "mmlu_1193",
+   "subject": "college_mathematics",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.5201
+  },
+  {
+   "id": "mmlu_1194",
+   "subject": "college_mathematics",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.0072
+  },
+  {
+   "id": "mmlu_1195",
+   "subject": "college_mathematics",
+   "gold": "A",
+   "pred": "B",
+   "p_gold": 0.1274
+  },
+  {
+   "id": "mmlu_13455",
+   "subject": "sociology",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9915
+  },
+  {
+   "id": "mmlu_13456",
+   "subject": "sociology",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.2388
+  },
+  {
+   "id": "mmlu_13457",
+   "subject": "sociology",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9957
+  },
+  {
+   "id": "mmlu_13458",
+   "subject": "sociology",
+   "gold": "A",
+   "pred": "B",
+   "p_gold": 0.1499
+  },
+  {
+   "id": "mmlu_13459",
+   "subject": "sociology",
+   "gold": "C",
+   "pred": "A",
+   "p_gold": 0.2233
+  },
+  {
+   "id": "mmlu_13460",
+   "subject": "sociology",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.1282
+  },
+  {
+   "id": "mmlu_13461",
+   "subject": "sociology",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9301
+  },
+  {
+   "id": "mmlu_13462",
+   "subject": "sociology",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9424
+  },
+  {
+   "id": "mmlu_13463",
+   "subject": "sociology",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9952
+  },
+  {
+   "id": "mmlu_13464",
+   "subject": "sociology",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.1811
+  },
+  {
+   "id": "mmlu_1408",
+   "subject": "college_physics",
+   "gold": "D",
+   "pred": "B",
+   "p_gold": 0.1063
+  },
+  {
+   "id": "mmlu_1409",
+   "subject": "college_physics",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.6607
+  },
+  {
+   "id": "mmlu_1410",
+   "subject": "college_physics",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.3893
+  },
+  {
+   "id": "mmlu_1411",
+   "subject": "college_physics",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.5387
+  },
+  {
+   "id": "mmlu_1412",
+   "subject": "college_physics",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.4763
+  },
+  {
+   "id": "mmlu_1413",
+   "subject": "college_physics",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.3835
+  },
+  {
+   "id": "mmlu_1414",
+   "subject": "college_physics",
+   "gold": "B",
+   "pred": "A",
+   "p_gold": 0.417
+  },
+  {
+   "id": "mmlu_1415",
+   "subject": "college_physics",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.2397
+  },
+  {
+   "id": "mmlu_1416",
+   "subject": "college_physics",
+   "gold": "D",
+   "pred": "B",
+   "p_gold": 0.0279
+  },
+  {
+   "id": "mmlu_1417",
+   "subject": "college_physics",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.3847
+  },
+  {
+   "id": "mmlu_1542",
+   "subject": "computer_security",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9577
+  },
+  {
+   "id": "mmlu_1543",
+   "subject": "computer_security",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9274
+  },
+  {
+   "id": "mmlu_1544",
+   "subject": "computer_security",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.0747
+  },
+  {
+   "id": "mmlu_1545",
+   "subject": "computer_security",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.8016
+  },
+  {
+   "id": "mmlu_1546",
+   "subject": "computer_security",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.7245
+  },
+  {
+   "id": "mmlu_1547",
+   "subject": "computer_security",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.3968
+  },
+  {
+   "id": "mmlu_1548",
+   "subject": "computer_security",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.835
+  },
+  {
+   "id": "mmlu_1549",
+   "subject": "computer_security",
+   "gold": "D",
+   "pred": "B",
+   "p_gold": 0.0992
+  },
+  {
+   "id": "mmlu_1550",
+   "subject": "computer_security",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.7832
+  },
+  {
+   "id": "mmlu_1551",
+   "subject": "computer_security",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.609
+  },
+  {
+   "id": "mmlu_2471",
+   "subject": "formal_logic",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.1926
+  },
+  {
+   "id": "mmlu_2472",
+   "subject": "formal_logic",
+   "gold": "A",
+   "pred": "B",
+   "p_gold": 0.0881
+  },
+  {
+   "id": "mmlu_2473",
+   "subject": "formal_logic",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.3828
+  },
+  {
+   "id": "mmlu_2474",
+   "subject": "formal_logic",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.1059
+  },
+  {
+   "id": "mmlu_2475",
+   "subject": "formal_logic",
+   "gold": "D",
+   "pred": "A",
+   "p_gold": 0.0422
+  },
+  {
+   "id": "mmlu_2476",
+   "subject": "formal_logic",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.8246
+  },
+  {
+   "id": "mmlu_2477",
+   "subject": "formal_logic",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.1727
+  },
+  {
+   "id": "mmlu_2478",
+   "subject": "formal_logic",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.5341
+  },
+  {
+   "id": "mmlu_2479",
+   "subject": "formal_logic",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.491
+  },
+  {
+   "id": "mmlu_2480",
+   "subject": "formal_logic",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.3908
+  },
+  {
+   "id": "mmlu_3517",
+   "subject": "high_school_geography",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9995
+  },
+  {
+   "id": "mmlu_3518",
+   "subject": "high_school_geography",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.7996
+  },
+  {
+   "id": "mmlu_3519",
+   "subject": "high_school_geography",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.9998
+  },
+  {
+   "id": "mmlu_3520",
+   "subject": "high_school_geography",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9757
+  },
+  {
+   "id": "mmlu_3521",
+   "subject": "high_school_geography",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.3489
+  },
+  {
+   "id": "mmlu_3522",
+   "subject": "high_school_geography",
+   "gold": "B",
+   "pred": "A",
+   "p_gold": 0.3138
+  },
+  {
+   "id": "mmlu_3523",
+   "subject": "high_school_geography",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.2683
+  },
+  {
+   "id": "mmlu_3524",
+   "subject": "high_school_geography",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.128
+  },
+  {
+   "id": "mmlu_3525",
+   "subject": "high_school_geography",
+   "gold": "A",
+   "pred": "D",
+   "p_gold": 0.1647
+  },
+  {
+   "id": "mmlu_3526",
+   "subject": "high_school_geography",
+   "gold": "D",
+   "pred": "A",
+   "p_gold": 0.0503
+  },
+  {
+   "id": "mmlu_3943",
+   "subject": "high_school_macroeconomics",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9236
+  },
+  {
+   "id": "mmlu_3944",
+   "subject": "high_school_macroeconomics",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.0079
+  },
+  {
+   "id": "mmlu_3945",
+   "subject": "high_school_macroeconomics",
+   "gold": "A",
+   "pred": "D",
+   "p_gold": 0.2507
+  },
+  {
+   "id": "mmlu_3946",
+   "subject": "high_school_macroeconomics",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.0254
+  },
+  {
+   "id": "mmlu_3947",
+   "subject": "high_school_macroeconomics",
+   "gold": "C",
+   "pred": "A",
+   "p_gold": 0.3565
+  },
+  {
+   "id": "mmlu_3948",
+   "subject": "high_school_macroeconomics",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.7922
+  },
+  {
+   "id": "mmlu_3949",
+   "subject": "high_school_macroeconomics",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.5583
+  },
+  {
+   "id": "mmlu_3950",
+   "subject": "high_school_macroeconomics",
+   "gold": "A",
+   "pred": "B",
+   "p_gold": 0.4677
+  },
+  {
+   "id": "mmlu_3951",
+   "subject": "high_school_macroeconomics",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.6054
+  },
+  {
+   "id": "mmlu_3952",
+   "subject": "high_school_macroeconomics",
+   "gold": "A",
+   "pred": "B",
+   "p_gold": 0.0314
+  },
+  {
+   "id": "mmlu_5305",
+   "subject": "high_school_psychology",
+   "gold": "D",
+   "pred": "B",
+   "p_gold": 0.0141
+  },
+  {
+   "id": "mmlu_5306",
+   "subject": "high_school_psychology",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.7191
+  },
+  {
+   "id": "mmlu_5307",
+   "subject": "high_school_psychology",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9837
+  },
+  {
+   "id": "mmlu_5308",
+   "subject": "high_school_psychology",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.6748
+  },
+  {
+   "id": "mmlu_5309",
+   "subject": "high_school_psychology",
+   "gold": "D",
+   "pred": "B",
+   "p_gold": 0.0158
+  },
+  {
+   "id": "mmlu_5310",
+   "subject": "high_school_psychology",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.97
+  },
+  {
+   "id": "mmlu_5311",
+   "subject": "high_school_psychology",
+   "gold": "D",
+   "pred": "B",
+   "p_gold": 0.045
+  },
+  {
+   "id": "mmlu_5312",
+   "subject": "high_school_psychology",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9696
+  },
+  {
+   "id": "mmlu_5313",
+   "subject": "high_school_psychology",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9096
+  },
+  {
+   "id": "mmlu_5314",
+   "subject": "high_school_psychology",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.9995
+  },
+  {
+   "id": "mmlu_5991",
+   "subject": "high_school_world_history",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.9705
+  },
+  {
+   "id": "mmlu_5992",
+   "subject": "high_school_world_history",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.8247
+  },
+  {
+   "id": "mmlu_5993",
+   "subject": "high_school_world_history",
+   "gold": "B",
+   "pred": "A",
+   "p_gold": 0.0561
+  },
+  {
+   "id": "mmlu_5994",
+   "subject": "high_school_world_history",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.0624
+  },
+  {
+   "id": "mmlu_5995",
+   "subject": "high_school_world_history",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9717
+  },
+  {
+   "id": "mmlu_5996",
+   "subject": "high_school_world_history",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9247
+  },
+  {
+   "id": "mmlu_5997",
+   "subject": "high_school_world_history",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9683
+  },
+  {
+   "id": "mmlu_5998",
+   "subject": "high_school_world_history",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.8674
+  },
+  {
+   "id": "mmlu_5999",
+   "subject": "high_school_world_history",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9868
+  },
+  {
+   "id": "mmlu_6000",
+   "subject": "high_school_world_history",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.8504
+  },
+  {
+   "id": "mmlu_614",
+   "subject": "clinical_knowledge",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.3432
+  },
+  {
+   "id": "mmlu_615",
+   "subject": "clinical_knowledge",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.5293
+  },
+  {
+   "id": "mmlu_616",
+   "subject": "clinical_knowledge",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.2194
+  },
+  {
+   "id": "mmlu_617",
+   "subject": "clinical_knowledge",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.968
+  },
+  {
+   "id": "mmlu_618",
+   "subject": "clinical_knowledge",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9651
+  },
+  {
+   "id": "mmlu_619",
+   "subject": "clinical_knowledge",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.4043
+  },
+  {
+   "id": "mmlu_620",
+   "subject": "clinical_knowledge",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9793
+  },
+  {
+   "id": "mmlu_621",
+   "subject": "clinical_knowledge",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.3301
+  },
+  {
+   "id": "mmlu_622",
+   "subject": "clinical_knowledge",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9865
+  },
+  {
+   "id": "mmlu_623",
+   "subject": "clinical_knowledge",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.3294
+  },
+  {
+   "id": "mmlu_6468",
+   "subject": "international_law",
+   "gold": "A",
+   "pred": "B",
+   "p_gold": 0.3239
+  },
+  {
+   "id": "mmlu_6469",
+   "subject": "international_law",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9528
+  },
+  {
+   "id": "mmlu_6470",
+   "subject": "international_law",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.7583
+  },
+  {
+   "id": "mmlu_6471",
+   "subject": "international_law",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.2428
+  },
+  {
+   "id": "mmlu_6472",
+   "subject": "international_law",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9654
+  },
+  {
+   "id": "mmlu_6473",
+   "subject": "international_law",
+   "gold": "C",
+   "pred": "A",
+   "p_gold": 0.2662
+  },
+  {
+   "id": "mmlu_6474",
+   "subject": "international_law",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.4423
+  },
+  {
+   "id": "mmlu_6475",
+   "subject": "international_law",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.938
+  },
+  {
+   "id": "mmlu_6476",
+   "subject": "international_law",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.9637
+  },
+  {
+   "id": "mmlu_6477",
+   "subject": "international_law",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.8124
+  },
+  {
+   "id": "mmlu_6851",
+   "subject": "machine_learning",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.1694
+  },
+  {
+   "id": "mmlu_6852",
+   "subject": "machine_learning",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.6188
+  },
+  {
+   "id": "mmlu_6853",
+   "subject": "machine_learning",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.8092
+  },
+  {
+   "id": "mmlu_6854",
+   "subject": "machine_learning",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.0458
+  },
+  {
+   "id": "mmlu_6855",
+   "subject": "machine_learning",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9007
+  },
+  {
+   "id": "mmlu_6856",
+   "subject": "machine_learning",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.0306
+  },
+  {
+   "id": "mmlu_6857",
+   "subject": "machine_learning",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.5487
+  },
+  {
+   "id": "mmlu_6858",
+   "subject": "machine_learning",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.7042
+  },
+  {
+   "id": "mmlu_6859",
+   "subject": "machine_learning",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9844
+  },
+  {
+   "id": "mmlu_6860",
+   "subject": "machine_learning",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.0527
+  },
+  {
+   "id": "mmlu_7104",
+   "subject": "marketing",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.381
+  },
+  {
+   "id": "mmlu_7105",
+   "subject": "marketing",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.2186
+  },
+  {
+   "id": "mmlu_7106",
+   "subject": "marketing",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9578
+  },
+  {
+   "id": "mmlu_7107",
+   "subject": "marketing",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9999
+  },
+  {
+   "id": "mmlu_7108",
+   "subject": "marketing",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.9983
+  },
+  {
+   "id": "mmlu_7109",
+   "subject": "marketing",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.9997
+  },
+  {
+   "id": "mmlu_7110",
+   "subject": "marketing",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9969
+  },
+  {
+   "id": "mmlu_7111",
+   "subject": "marketing",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.9993
+  },
+  {
+   "id": "mmlu_7112",
+   "subject": "marketing",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.9642
+  },
+  {
+   "id": "mmlu_7113",
+   "subject": "marketing",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.812
+  },
+  {
+   "id": "mmlu_791",
+   "subject": "college_biology",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.0381
+  },
+  {
+   "id": "mmlu_792",
+   "subject": "college_biology",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.2777
+  },
+  {
+   "id": "mmlu_793",
+   "subject": "college_biology",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.4267
+  },
+  {
+   "id": "mmlu_794",
+   "subject": "college_biology",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9843
+  },
+  {
+   "id": "mmlu_795",
+   "subject": "college_biology",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.9996
+  },
+  {
+   "id": "mmlu_796",
+   "subject": "college_biology",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.0242
+  },
+  {
+   "id": "mmlu_797",
+   "subject": "college_biology",
+   "gold": "D",
+   "pred": "A",
+   "p_gold": 0.0292
+  },
+  {
+   "id": "mmlu_798",
+   "subject": "college_biology",
+   "gold": "B",
+   "pred": "A",
+   "p_gold": 0.3431
+  },
+  {
+   "id": "mmlu_799",
+   "subject": "college_biology",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.993
+  },
+  {
+   "id": "mmlu_800",
+   "subject": "college_biology",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.2497
+  },
+  {
+   "id": "mmlu_8313",
+   "subject": "moral_disputes",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9519
+  },
+  {
+   "id": "mmlu_8314",
+   "subject": "moral_disputes",
+   "gold": "D",
+   "pred": "B",
+   "p_gold": 0.0181
+  },
+  {
+   "id": "mmlu_8315",
+   "subject": "moral_disputes",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.6606
+  },
+  {
+   "id": "mmlu_8316",
+   "subject": "moral_disputes",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.6772
+  },
+  {
+   "id": "mmlu_8317",
+   "subject": "moral_disputes",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.4659
+  },
+  {
+   "id": "mmlu_8318",
+   "subject": "moral_disputes",
+   "gold": "C",
+   "pred": "D",
+   "p_gold": 0.1546
+  },
+  {
+   "id": "mmlu_8319",
+   "subject": "moral_disputes",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.1319
+  },
+  {
+   "id": "mmlu_8320",
+   "subject": "moral_disputes",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.776
+  },
+  {
+   "id": "mmlu_8321",
+   "subject": "moral_disputes",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9564
+  },
+  {
+   "id": "mmlu_8322",
+   "subject": "moral_disputes",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.1911
+  },
+  {
+   "id": "mmlu_8779",
+   "subject": "moral_scenarios",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.8271
+  },
+  {
+   "id": "mmlu_8780",
+   "subject": "moral_scenarios",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.7361
+  },
+  {
+   "id": "mmlu_8781",
+   "subject": "moral_scenarios",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.0659
+  },
+  {
+   "id": "mmlu_8782",
+   "subject": "moral_scenarios",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.6907
+  },
+  {
+   "id": "mmlu_8783",
+   "subject": "moral_scenarios",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.9061
+  },
+  {
+   "id": "mmlu_8784",
+   "subject": "moral_scenarios",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.0123
+  },
+  {
+   "id": "mmlu_8785",
+   "subject": "moral_scenarios",
+   "gold": "B",
+   "pred": "C",
+   "p_gold": 0.2351
+  },
+  {
+   "id": "mmlu_8786",
+   "subject": "moral_scenarios",
+   "gold": "D",
+   "pred": "C",
+   "p_gold": 0.0083
+  },
+  {
+   "id": "mmlu_8787",
+   "subject": "moral_scenarios",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.7414
+  },
+  {
+   "id": "mmlu_8788",
+   "subject": "moral_scenarios",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.7635
+  },
+  {
+   "id": "mmlu_950",
+   "subject": "college_chemistry",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.1302
+  },
+  {
+   "id": "mmlu_951",
+   "subject": "college_chemistry",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.8791
+  },
+  {
+   "id": "mmlu_952",
+   "subject": "college_chemistry",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.4638
+  },
+  {
+   "id": "mmlu_953",
+   "subject": "college_chemistry",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.3347
+  },
+  {
+   "id": "mmlu_954",
+   "subject": "college_chemistry",
+   "gold": "A",
+   "pred": "C",
+   "p_gold": 0.1267
+  },
+  {
+   "id": "mmlu_955",
+   "subject": "college_chemistry",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.9286
+  },
+  {
+   "id": "mmlu_956",
+   "subject": "college_chemistry",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.3926
+  },
+  {
+   "id": "mmlu_957",
+   "subject": "college_chemistry",
+   "gold": "D",
+   "pred": "B",
+   "p_gold": 0.1586
+  },
+  {
+   "id": "mmlu_958",
+   "subject": "college_chemistry",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.5781
+  },
+  {
+   "id": "mmlu_959",
+   "subject": "college_chemistry",
+   "gold": "D",
+   "pred": "D",
+   "p_gold": 0.733
+  },
+  {
+   "id": "mmlu_9548",
+   "subject": "nutrition",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.5939
+  },
+  {
+   "id": "mmlu_9549",
+   "subject": "nutrition",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.9933
+  },
+  {
+   "id": "mmlu_9550",
+   "subject": "nutrition",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.417
+  },
+  {
+   "id": "mmlu_9551",
+   "subject": "nutrition",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.9036
+  },
+  {
+   "id": "mmlu_9552",
+   "subject": "nutrition",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.95
+  },
+  {
+   "id": "mmlu_9553",
+   "subject": "nutrition",
+   "gold": "C",
+   "pred": "C",
+   "p_gold": 0.6441
+  },
+  {
+   "id": "mmlu_9554",
+   "subject": "nutrition",
+   "gold": "C",
+   "pred": "B",
+   "p_gold": 0.1604
+  },
+  {
+   "id": "mmlu_9555",
+   "subject": "nutrition",
+   "gold": "B",
+   "pred": "B",
+   "p_gold": 0.6349
+  },
+  {
+   "id": "mmlu_9556",
+   "subject": "nutrition",
+   "gold": "B",
+   "pred": "A",
+   "p_gold": 0.3467
+  },
+  {
+   "id": "mmlu_9557",
+   "subject": "nutrition",
+   "gold": "A",
+   "pred": "A",
+   "p_gold": 0.4667
+  }
+ ]
+}

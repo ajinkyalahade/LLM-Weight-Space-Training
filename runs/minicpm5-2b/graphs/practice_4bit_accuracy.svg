@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" aria-label="MLX 4-bit exports: share of 64 practice problems solved"><style>
+svg{--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;
+    --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--on4:#0b0b0b}
+@media (prefers-color-scheme: dark){svg{--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--muted:#898781;
+    --grid:#2c2c2a;--axis:#383835;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--on4:#ffffff}}
+text{font-family:system-ui, -apple-system, "Segoe UI", sans-serif;fill:var(--ink2);font-size:12px}
+.title{fill:var(--ink);font-size:15px;font-weight:600}.sub{fill:var(--ink2)}.tick{fill:var(--muted);font-size:11px}
+.val{fill:var(--ink);font-size:11px;font-variant-numeric:tabular-nums}.in{fill:#fff;font-size:11px;font-weight:600}
+.in4{fill:var(--on4);font-size:11px;font-weight:600}
+.grid{stroke:var(--grid);stroke-width:1}.axis{stroke:var(--axis);stroke-width:1}.ref{stroke:var(--axis);stroke-width:1}
+.s1{fill:var(--s1)}.s2{fill:var(--s2)}.s3{fill:var(--s3)}.s4{fill:var(--s4)}
+.l1{stroke:var(--s1)}.l2{stroke:var(--s2)}.l3{stroke:var(--s3)}.l4{stroke:var(--s4)}
+.line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.dot{stroke:var(--surface);stroke-width:2}
+</style>
+<rect width="720" height="380" fill="var(--surface)"/>
+<text class="title" x="20" y="28">MLX 4-bit exports: share of 64 practice problems solved</text>
+<text class="sub" x="20" y="47">64 answers per model, same problems, at most 16,384 new tokens each.</text>
+<rect class="s1" x="20" y="60" width="10" height="10" rx="2"/><text x="35" y="69">Original 4-bit</text>
+<rect class="s2" x="147.08" y="60" width="10" height="10" rx="2"/><text x="162.08" y="69">m3c 4-bit</text>
+<line class="grid" x1="64" x2="700" y1="336.0" y2="336.0"/><text class="tick" x="56" y="340.0" text-anchor="end">0</text>
+<line class="grid" x1="64" x2="700" y1="288.8" y2="288.8"/><text class="tick" x="56" y="292.8" text-anchor="end">20</text>
+<line class="grid" x1="64" x2="700" y1="241.6" y2="241.6"/><text class="tick" x="56" y="245.6" text-anchor="end">40</text>
+<line class="grid" x1="64" x2="700" y1="194.4" y2="194.4"/><text class="tick" x="56" y="198.4" text-anchor="end">60</text>
+<line class="grid" x1="64" x2="700" y1="147.2" y2="147.2"/><text class="tick" x="56" y="151.2" text-anchor="end">80</text>
+<line class="grid" x1="64" x2="700" y1="100.0" y2="100.0"/><text class="tick" x="56" y="104.0" text-anchor="end">100</text>
+<text class="tick" x="20" y="90">%</text>
+<path class="s1" d="M118.5,336 V119.7 Q118.5,115.7 122.5,115.7 H138.5 Q142.5,115.7 142.5,119.7 V336 Z"><title>Easy — Original 4-bit: 93%</title></path><text class="val" x="130.5" y="110.7" text-anchor="middle">93%</text>
+<path class="s2" d="M144.5,336 V104.0 Q144.5,100.0 148.5,100.0 H164.5 Q168.5,100.0 168.5,104.0 V336 Z"><title>Easy — m3c 4-bit: 100%</title></path><text class="val" x="156.5" y="95.0" text-anchor="middle">100%</text>
+<text x="143.5" y="354" text-anchor="middle">Easy</text>
+<path class="s1" d="M277.5,336 V308.5 Q277.5,304.5 281.5,304.5 H297.5 Q301.5,304.5 301.5,308.5 V336 Z"><title>Medium — Original 4-bit: 13%</title></path><text class="val" x="289.5" y="299.5" text-anchor="middle">13%</text>
+<path class="s2" d="M303.5,336 V229.9 Q303.5,225.9 307.5,225.9 H323.5 Q327.5,225.9 327.5,229.9 V336 Z"><title>Medium — m3c 4-bit: 47%</title></path><text class="val" x="315.5" y="220.9" text-anchor="middle">47%</text>
+<text x="302.5" y="354" text-anchor="middle">Medium</text>
+<path class="s1" d="M436.5,336 V332.5 Q436.5,329.1 440.0,329.1 H457.0 Q460.5,329.1 460.5,332.5 V336 Z"><title>Hard — Original 4-bit: 3%</title></path><text class="val" x="448.5" y="324.1" text-anchor="middle">3%</text>
+<path class="s2" d="M462.5,336 V319.2 Q462.5,315.2 466.5,315.2 H482.5 Q486.5,315.2 486.5,319.2 V336 Z"><title>Hard — m3c 4-bit: 9%</title></path><text class="val" x="474.5" y="310.2" text-anchor="middle">9%</text>
+<text x="461.5" y="354" text-anchor="middle">Hard</text>
+<path class="s1" d="M595.5,336 V277.3 Q595.5,273.3 599.5,273.3 H615.5 Q619.5,273.3 619.5,277.3 V336 Z"><title>All — Original 4-bit: 27%</title></path><text class="val" x="607.5" y="268.3" text-anchor="middle">27%</text>
+<path class="s2" d="M621.5,336 V247.8 Q621.5,243.8 625.5,243.8 H641.5 Q645.5,243.8 645.5,247.8 V336 Z"><title>All — m3c 4-bit: 39%</title></path><text class="val" x="633.5" y="238.8" text-anchor="middle">39%</text>
+<text x="620.5" y="354" text-anchor="middle">All</text>
+<line class="axis" x1="64" x2="700" y1="336" y2="336"/>
+</svg>

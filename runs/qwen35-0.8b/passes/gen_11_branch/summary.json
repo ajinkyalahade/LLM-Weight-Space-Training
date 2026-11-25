@@ -1,0 +1,23 @@
+{
+ "pass": 11,
+ "type": "generate",
+ "label": "branch",
+ "model": "models/Qwen3.5-0.8B",
+ "edit": null,
+ "protocol": "think35",
+ "source": "runs/qwen35-0.8b/passes/fwd_2_loops_a/request.json.gz",
+ "offsets": [
+  -300,
+  0
+ ],
+ "n": 8,
+ "length": 300,
+ "continuations": 128,
+ "rep": 34,
+ "prod": 39,
+ "prefixes_with_both": 3,
+ "tokens": 38400,
+ "seconds": 228.0,
+ "peak_gb": 4.89,
+ "dir": "runs/qwen35-0.8b/passes/gen_11_branch"
+}

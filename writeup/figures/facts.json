@@ -1,0 +1,512 @@
+{
+ "comparisons": [
+  {
+   "label": "Published edit, reproduced (96 problems, 32k cap)",
+   "group": "Qwen3.5-0.8B",
+   "kind": "practice",
+   "run": "qwen35-0.8b",
+   "a": "gen_1_original",
+   "b": "gen_10_published",
+   "n": 96,
+   "orig": 8,
+   "edit": 47,
+   "diff_pts": 40.6,
+   "se_pts": 5.0,
+   "z": 8.06,
+   "gained": 39,
+   "lost": 0
+  },
+  {
+   "label": "Edit A: early vs late text",
+   "group": "Qwen3.5-0.8B",
+   "kind": "practice",
+   "run": "qwen35-0.8b",
+   "a": "gen_16_fresh_original",
+   "b": "gen_14_fresh_mine_a",
+   "n": 64,
+   "orig": 8,
+   "edit": 11,
+   "diff_pts": 4.7,
+   "se_pts": 4.1,
+   "z": 1.14,
+   "gained": 5,
+   "lost": 2
+  },
+  {
+   "label": "Published edit (64 new problems)",
+   "group": "Qwen3.5-0.8B",
+   "kind": "practice",
+   "run": "qwen35-0.8b",
+   "a": "gen_16_fresh_original",
+   "b": "gen_15_fresh_published",
+   "n": 64,
+   "orig": 8,
+   "edit": 21,
+   "diff_pts": 20.3,
+   "se_pts": 5.1,
+   "z": 4.01,
+   "gained": 13,
+   "lost": 0
+  },
+  {
+   "label": "Edit M2: matched replays",
+   "group": "Qwen3.5-0.8B",
+   "kind": "practice",
+   "run": "qwen35-0.8b",
+   "a": "gen_16_fresh_original",
+   "b": "gen_20_fresh_mine_m2",
+   "n": 64,
+   "orig": 8,
+   "edit": 25,
+   "diff_pts": 26.6,
+   "se_pts": 6.0,
+   "z": 4.43,
+   "gained": 18,
+   "lost": 1
+  },
+  {
+   "label": "M2 vs published edit",
+   "group": "Qwen3.5-0.8B",
+   "kind": "head-to-head",
+   "run": "qwen35-0.8b",
+   "a": "gen_15_fresh_published",
+   "b": "gen_20_fresh_mine_m2",
+   "n": 64,
+   "orig": 21,
+   "edit": 25,
+   "diff_pts": 6.2,
+   "se_pts": 5.4,
+   "z": 1.16,
+   "gained": 8,
+   "lost": 4
+  },
+  {
+   "label": "M2 vs published edit (96, 32k cap)",
+   "group": "Qwen3.5-0.8B",
+   "kind": "head-to-head",
+   "run": "qwen35-0.8b",
+   "a": "gen_10_published",
+   "b": "gen_21_m2_96",
+   "n": 96,
+   "orig": 47,
+   "edit": 45,
+   "diff_pts": -2.1,
+   "se_pts": 4.2,
+   "z": -0.5,
+   "gained": 7,
+   "lost": 9
+  },
+  {
+   "label": "Edit M2, sealed (256)",
+   "group": "Qwen3.5-0.8B",
+   "kind": "sealed",
+   "run": "qwen35-0.8b",
+   "a": "gen_22_holdout_original",
+   "b": "gen_23_holdout_m2",
+   "n": 256,
+   "orig": 34,
+   "edit": 134,
+   "diff_pts": 39.1,
+   "se_pts": 3.2,
+   "z": 12.39,
+   "gained": 102,
+   "lost": 2
+  },
+  {
+   "label": "M2 at 4-bit vs original at full precision",
+   "group": "Qwen3.5-0.8B",
+   "kind": "4-bit",
+   "run": "qwen35-0.8b",
+   "a": "gen_16_fresh_original",
+   "b": "gen_26_fresh_m2_4bit",
+   "n": 64,
+   "orig": 8,
+   "edit": 18,
+   "diff_pts": 15.6,
+   "se_pts": 5.6,
+   "z": 2.81,
+   "gained": 12,
+   "lost": 2
+  },
+  {
+   "label": "Edit m2a: model 1 recipe",
+   "group": "Qwen3.5-2B",
+   "kind": "practice",
+   "run": "qwen35-2b",
+   "a": "gen_1_original",
+   "b": "gen_5_fresh_m2a",
+   "n": 64,
+   "orig": 36,
+   "edit": 42,
+   "diff_pts": 9.4,
+   "se_pts": 4.3,
+   "z": 2.18,
+   "gained": 7,
+   "lost": 1
+  },
+  {
+   "label": "Edit m2a, confirmation (64 new)",
+   "group": "Qwen3.5-2B",
+   "kind": "practice",
+   "run": "qwen35-2b",
+   "a": "gen_8_confirm_original",
+   "b": "gen_9_confirm_m2a",
+   "n": 64,
+   "orig": 47,
+   "edit": 53,
+   "diff_pts": 9.4,
+   "se_pts": 3.7,
+   "z": 2.55,
+   "gained": 6,
+   "lost": 0
+  },
+  {
+   "label": "Edit m2a, sealed (256)",
+   "group": "Qwen3.5-2B",
+   "kind": "sealed",
+   "run": "qwen35-2b",
+   "a": "gen_10_sealed_original",
+   "b": "gen_11_sealed_m2a",
+   "n": 256,
+   "orig": 168,
+   "edit": 188,
+   "diff_pts": 7.8,
+   "se_pts": 2.5,
+   "z": 3.14,
+   "gained": 31,
+   "lost": 11
+  },
+  {
+   "label": "m2a at 4-bit vs original at 4-bit",
+   "group": "Qwen3.5-2B",
+   "kind": "4-bit",
+   "run": "qwen35-2b",
+   "a": "gen_13_fresh_orig_4bit",
+   "b": "gen_12_fresh_4bit",
+   "n": 64,
+   "orig": 7,
+   "edit": 27,
+   "diff_pts": 31.2,
+   "se_pts": 6.2,
+   "z": 5.0,
+   "gained": 21,
+   "lost": 1
+  },
+  {
+   "label": "Edit m3b: calibrated on thinking only",
+   "group": "MiniCPM5-2B",
+   "kind": "practice",
+   "run": "minicpm5-2b",
+   "a": "gen_1_original",
+   "b": "gen_7_m3b",
+   "n": 64,
+   "orig": 21,
+   "edit": 12,
+   "diff_pts": -14.1,
+   "se_pts": 4.9,
+   "z": -2.86,
+   "gained": 1,
+   "lost": 10
+  },
+  {
+   "label": "Edit m3c: calibrated everywhere",
+   "group": "MiniCPM5-2B",
+   "kind": "practice",
+   "run": "minicpm5-2b",
+   "a": "gen_1_original",
+   "b": "gen_10_m3c",
+   "n": 64,
+   "orig": 21,
+   "edit": 30,
+   "diff_pts": 14.1,
+   "se_pts": 4.9,
+   "z": 2.86,
+   "gained": 10,
+   "lost": 1
+  },
+  {
+   "label": "Edit m3c, new seed",
+   "group": "MiniCPM5-2B",
+   "kind": "practice",
+   "run": "minicpm5-2b",
+   "a": "gen_11_original_s1",
+   "b": "gen_12_m3c_s1",
+   "n": 64,
+   "orig": 23,
+   "edit": 29,
+   "diff_pts": 9.4,
+   "se_pts": 3.7,
+   "z": 2.55,
+   "gained": 6,
+   "lost": 0
+  },
+  {
+   "label": "Edit m3c, sealed (128)",
+   "group": "MiniCPM5-2B",
+   "kind": "sealed",
+   "run": "minicpm5-2b",
+   "a": "gen_13_sealed_original",
+   "b": "gen_14_sealed_m3c",
+   "n": 128,
+   "orig": 43,
+   "edit": 67,
+   "diff_pts": 18.8,
+   "se_pts": 3.5,
+   "z": 5.41,
+   "gained": 24,
+   "lost": 0
+  },
+  {
+   "label": "m3c at 4-bit vs original at 4-bit",
+   "group": "MiniCPM5-2B",
+   "kind": "4-bit",
+   "run": "minicpm5-2b",
+   "a": "gen_17_orig_4bit",
+   "b": "gen_18_m3c_4bit",
+   "n": 64,
+   "orig": 17,
+   "edit": 25,
+   "diff_pts": 12.5,
+   "se_pts": 4.2,
+   "z": 3.0,
+   "gained": 8,
+   "lost": 0
+  }
+ ],
+ "sealed": {
+  "Qwen3.5-0.8B": {
+   "original": {
+    "n": 256,
+    "correct": 34,
+    "wrong": 0,
+    "no_answer": 0,
+    "cut_loop": 199,
+    "cut_other": 23,
+    "closed_thinking": 35,
+    "mean_tokens": 14947,
+    "by_source": {
+     "gsm8k": [
+      22,
+      128
+     ],
+     "math": [
+      12,
+      128
+     ]
+    }
+   },
+   "edited": {
+    "n": 256,
+    "correct": 134,
+    "wrong": 16,
+    "no_answer": 0,
+    "cut_loop": 0,
+    "cut_other": 106,
+    "closed_thinking": 164,
+    "mean_tokens": 11099,
+    "by_source": {
+     "gsm8k": [
+      90,
+      128
+     ],
+     "math": [
+      44,
+      128
+     ]
+    }
+   }
+  },
+  "Qwen3.5-2B": {
+   "original": {
+    "n": 256,
+    "correct": 168,
+    "wrong": 4,
+    "no_answer": 1,
+    "cut_loop": 20,
+    "cut_other": 63,
+    "closed_thinking": 173,
+    "mean_tokens": 9234,
+    "by_source": {
+     "gsm8k": [
+      92,
+      128
+     ],
+     "math": [
+      76,
+      128
+     ]
+    }
+   },
+   "edited": {
+    "n": 256,
+    "correct": 188,
+    "wrong": 7,
+    "no_answer": 2,
+    "cut_loop": 0,
+    "cut_other": 59,
+    "closed_thinking": 203,
+    "mean_tokens": 7806,
+    "by_source": {
+     "gsm8k": [
+      108,
+      128
+     ],
+     "math": [
+      80,
+      128
+     ]
+    }
+   }
+  },
+  "MiniCPM5-2B": {
+   "original": {
+    "n": 128,
+    "correct": 43,
+    "wrong": 0,
+    "no_answer": 0,
+    "cut_loop": 0,
+    "cut_other": 85,
+    "closed_thinking": 44,
+    "mean_tokens": 12765,
+    "by_source": {
+     "lcb_easy": [
+      30,
+      30
+     ],
+     "lcb_hard": [
+      4,
+      68
+     ],
+     "lcb_medium": [
+      9,
+      30
+     ]
+    }
+   },
+   "edited": {
+    "n": 128,
+    "correct": 67,
+    "wrong": 23,
+    "no_answer": 0,
+    "cut_loop": 0,
+    "cut_other": 38,
+    "closed_thinking": 115,
+    "mean_tokens": 10591,
+    "by_source": {
+     "lcb_easy": [
+      30,
+      30
+     ],
+     "lcb_hard": [
+      18,
+      68
+     ],
+     "lcb_medium": [
+      19,
+      30
+     ]
+    }
+   }
+  }
+ },
+ "mechanism": {
+  "positions": 160445,
+  "answer_median": 0.83,
+  "answer_p90": 2.81,
+  "closing_median": 22.57,
+  "closing_n": 9,
+  "by_position": {
+   "Thinking, end of a line": {
+    "bin_mid": [
+     512.0,
+     1536.0,
+     2560.0,
+     3584.0,
+     4608.0,
+     5632.0,
+     6656.0,
+     7680.0,
+     8704.0,
+     9728.0,
+     10752.0,
+     11776.0,
+     12800.0,
+     13824.0,
+     14848.0,
+     15872.0
+    ],
+    "median": [
+     3.09,
+     5.72,
+     6.34,
+     6.33,
+     6.8,
+     7.11,
+     7.73,
+     8.31,
+     8.5,
+     8.4,
+     10.08,
+     10.24,
+     11.33,
+     10.66,
+     11.16,
+     12.34
+    ]
+   },
+   "Thinking, inside a line": {
+    "bin_mid": [
+     512.0,
+     1536.0,
+     2560.0,
+     3584.0,
+     4608.0,
+     5632.0,
+     6656.0,
+     7680.0,
+     8704.0,
+     9728.0,
+     10752.0,
+     11776.0,
+     12800.0,
+     13824.0,
+     14848.0,
+     15872.0
+    ],
+    "median": [
+     0.45,
+     0.59,
+     0.67,
+     0.72,
+     0.79,
+     0.8,
+     0.83,
+     0.94,
+     0.97,
+     0.96,
+     1.1,
+     1.24,
+     1.27,
+     1.27,
+     1.33,
+     1.29
+    ]
+   }
+  },
+  "corr_lineend_pos": 0.554
+ },
+ "quant": {
+  "Qwen3.5-2B": [
+   56.2,
+   65.6,
+   10.9,
+   42.2
+  ],
+  "MiniCPM5-2B": [
+   32.8,
+   46.9,
+   26.6,
+   39.1
+  ]
+ }
+}

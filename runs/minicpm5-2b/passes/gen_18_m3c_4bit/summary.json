@@ -1,0 +1,31 @@
+{
+ "pass": 18,
+ "type": "generate",
+ "label": "m3c_4bit",
+ "model": "exports/minicpm5-2b/m3c-mlx-4bit",
+ "protocol": "minicpm_code",
+ "max_tokens": 16384,
+ "edit": null,
+ "seed": 0,
+ "batch": 16,
+ "generations": 64,
+ "accuracy": 0.3906,
+ "accuracy_by_source": {
+  "lcb_easy": 1.0,
+  "lcb_hard": 0.0882,
+  "lcb_medium": 0.4667
+ },
+ "mean_tokens": 11440,
+ "cut_share": 0.4688,
+ "failures": {
+  "wrong_answer": 8,
+  "no_answer_finished": 1,
+  "cut_at_max_tokens": 30
+ },
+ "loop_end_among_cut": 0,
+ "seconds": 2929.2,
+ "tokens_per_second": 250.0,
+ "peak_gb": 20.76,
+ "answers_from_an_earlier_session": 0,
+ "dir": "runs/minicpm5-2b/passes/gen_18_m3c_4bit"
+}

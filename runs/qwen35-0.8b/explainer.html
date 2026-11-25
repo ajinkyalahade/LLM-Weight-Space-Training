@@ -1,0 +1,989 @@
+<title>Fixing Qwen's Loops</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">
+<style>
+/* Layout: one vertical timeline. A numbered rail on the left, one card per step, results inline where they happened. */
+:root {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --ink: #16202b;
+  --ink-2: #4a5866;
+  --ink-3: #7b8794;
+  --line: #dde3e9;
+  --rail: #c9d2db;
+  --accent: #2a78d6;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
+  --muted-bar: #c3ccd6;
+  --done: #1a8a5f; --done-bg: #e3f4ec;
+  --run: #a86a00; --run-bg: #fbf0d9;
+  --todo: #5d6b79; --todo-bg: #e9edf1;
+  --fail: #b8442a; --fail-bg: #fbe8e3;
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f151b; --surface: #17202a; --ink: #e6ecf2; --ink-2: #a9b5c1; --ink-3: #7d8a97;
+  --line: #27323d; --rail: #34414e; --accent: #3987e5;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --muted-bar: #3a4754;
+  --done: #4fc795; --done-bg: #143326; --run: #e2a84a; --run-bg: #392a10;
+  --todo: #9aa7b4; --todo-bg: #222c36; --fail: #ef8a70; --fail-bg: #3a1d16;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f151b; --surface: #17202a; --ink: #e6ecf2; --ink-2: #a9b5c1; --ink-3: #7d8a97;
+  --line: #27323d; --rail: #34414e; --accent: #3987e5;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --muted-bar: #3a4754;
+  --done: #4fc795; --done-bg: #143326; --run: #e2a84a; --run-bg: #392a10;
+  --todo: #9aa7b4; --todo-bg: #222c36; --fail: #ef8a70; --fail-bg: #3a1d16;
+  color-scheme: dark }
+
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15.5px; line-height: 1.6; }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: 40px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(30px, 5vw, 44px); letter-spacing: -0.01em; }
+h2 { font-size: 23px; }
+h3 { font-size: 15px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); }
+p { margin: 0; max-width: 66ch; }
+.mono, .num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+code { font-family: var(--f-mono); font-size: 0.88em; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+.lede { font-size: 18px; color: var(--ink-2); margin-top: 12px; }
+
+/* summary strip */
+.strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 28px; }
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.stage b { font-family: var(--f-mono); font-size: 12px; color: var(--ink-3); font-weight: 500; }
+.stage span.t { font-size: 13.5px; line-height: 1.35; font-weight: 600; }
+.pill { align-self: flex-start; font-family: var(--f-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 7px; border-radius: 99px; }
+.pill.done { color: var(--done); background: var(--done-bg); }
+.pill.run { color: var(--run); background: var(--run-bg); }
+.pill.todo { color: var(--todo); background: var(--todo-bg); }
+.pill.fail { color: var(--fail); background: var(--fail-bg); }
+@media (max-width: 640px) { .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.strip.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 640px) { .strip.three { grid-template-columns: 1fr; } }
+
+.headline { margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.hn { padding: 14px 16px; border-left: 3px solid var(--rail); }
+.hn .v { font-family: var(--f-display); font-size: 32px; font-weight: 700; line-height: 1.1; }
+.hn .k { font-size: 13.5px; color: var(--ink-2); }
+.hn.key { border-left-color: var(--accent); }
+@media (max-width: 560px) { .headline { grid-template-columns: 1fr; } }
+
+/* timeline */
+.timeline { margin-top: 48px; display: flex; flex-direction: column; gap: 0; }
+.step { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; position: relative; padding-bottom: 28px; }
+.step::before { content: ""; position: absolute; left: 21px; top: 44px; bottom: 0; width: 2px; background: var(--rail); }
+.step:last-child::before { display: none; }
+.dot { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-mono); font-weight: 500; font-size: 15px;
+  background: var(--surface); border: 2px solid var(--rail); color: var(--ink-2); position: relative; z-index: 1; }
+.step.is-done .dot { border-color: var(--done); color: var(--done); }
+.step.is-run .dot { border-color: var(--run); color: var(--run); }
+.step.is-fail .dot { border-color: var(--fail); color: var(--fail); }
+.step.is-todo .dot { border-style: dashed; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.card-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.plain { background: var(--bg); border-radius: 6px; padding: 10px 14px; font-size: 15px; }
+.plain::before { content: "In plain words  "; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); display: block; }
+ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+li { max-width: 64ch; }
+.why { font-size: 14px; color: var(--ink-2); border-top: 1px dashed var(--line); padding-top: 10px; }
+.why strong { color: var(--ink); }
+
+/* phase break */
+.phase { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; padding-bottom: 20px; align-items: center; }
+.phase .tick { justify-self: center; width: 12px; height: 12px; border-radius: 3px; background: var(--rail); }
+.phase .eyebrow { color: var(--ink-2); }
+
+/* charts */
+.chart { display: flex; flex-direction: column; gap: 8px; }
+.row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px; align-items: center; font-size: 13.5px; }
+.row .lab { color: var(--ink-2); line-height: 1.25; }
+.track { position: relative; height: 22px; }
+.bar { height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
+.bar-val { position: absolute; top: 50%; transform: translateY(-50%); font-family: var(--f-mono); font-size: 12.5px; color: var(--ink); padding-left: 6px; white-space: nowrap; }
+.ref { position: absolute; top: -4px; bottom: -4px; width: 0; border-left: 1.5px dashed var(--ink-3); }
+.axis { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px; font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); }
+.axis .ticks { display: flex; justify-content: space-between; }
+@media (max-width: 520px) { .row, .axis { grid-template-columns: 96px minmax(0, 1fr); } }
+
+.stack { display: flex; gap: 2px; height: 26px; }
+.seg { height: 100%; display: flex; align-items: center; padding-left: 6px; font-family: var(--f-mono); font-size: 11.5px; color: #fff; overflow: hidden; white-space: nowrap; min-width: 0; }
+.seg:first-child { border-radius: 4px 0 0 4px; }
+.seg:last-child { border-radius: 0 4px 4px 0; }
+.seg.dark-text { color: #1a1300; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.cap { font-size: 13px; color: var(--ink-3); }
+
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 460px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; color: var(--ink-2); font-size: 12.5px; }
+td.n, th.n { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+tr.hl td { font-weight: 600; }
+
+/* neuron flip diagram */
+.flip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.flip > div { border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.arrowline { position: relative; height: 28px; }
+.arrowline .zero { position: absolute; left: 62.5%; top: 0; bottom: 0; border-left: 1.5px solid var(--ink-3); }
+.arrowline .arr { position: absolute; top: 9px; height: 10px; border-radius: 3px; }
+.flip .cap b { color: var(--ink); font-family: var(--f-mono); font-weight: 500; }
+@media (max-width: 520px) { .flip { grid-template-columns: 1fr; } }
+
+.bumps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.bump { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; font-size: 14px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.bump b { font-size: 14px; }
+.bump .fx { color: var(--ink-2); }
+@media (max-width: 600px) { .bumps { grid-template-columns: 1fr; } }
+
+footer { margin-top: 40px; font-size: 13px; color: var(--ink-3); border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+/* tabs */
+.tabs { display: flex; gap: 4px; margin-top: 28px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 10px 14px; font: 600 15px var(--f-body); color: var(--ink-3); cursor: pointer; white-space: nowrap; }
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* how-it-was-found tab */
+.how-intro { margin-top: 28px; display: flex; flex-direction: column; gap: 8px; }
+.flow { margin-top: 28px; display: flex; flex-direction: column; gap: 0; }
+.fstep { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; position: relative; padding-bottom: 14px; }
+.fstep::before { content: ""; position: absolute; left: 21px; top: 44px; bottom: 0; width: 2px; background: var(--rail); }
+.fstep:last-child::before { display: none; }
+.fstep .dot { border-color: var(--accent); color: var(--accent); }
+.fcard { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.fcard h2 { font-size: 21px; }
+.down { text-align: center; color: var(--ink-3); font-family: var(--f-mono); font-size: 12px; padding: 2px 0 14px 60px; }
+svg.viz { width: 100%; height: auto; display: block; overflow: visible; }
+svg.viz text { font-family: var(--f-mono); font-size: 11px; fill: var(--ink-2); }
+svg.viz .t-ink { fill: var(--ink); font-weight: 500; }
+.f-reason { fill: var(--s1); }
+.f-stuck { fill: var(--s4); }
+.f-prefix { fill: var(--muted-bar); }
+.s-rail { stroke: var(--rail); fill: none; stroke-width: 2; }
+.s-ink3 { stroke: var(--ink-3); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.vecs { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.vec { display: flex; flex-direction: column; gap: 6px; align-items: center; min-width: 0; }
+.vec .cells { display: grid; grid-template-columns: repeat(16, 9px); gap: 2px; }
+.vec .cells i { width: 9px; height: 18px; border-radius: 2px; display: block; }
+.vec span { font-size: 12.5px; color: var(--ink-2); text-align: center; max-width: 180px; line-height: 1.3; }
+.op { font-family: var(--f-display); font-size: 28px; font-weight: 700; color: var(--ink-3); }
+@media (max-width: 520px) { .vec .cells { grid-template-columns: repeat(16, 7px); } .vec .cells i { width: 7px; } }
+.cols { display: flex; align-items: flex-end; gap: 3px; height: 150px; border-bottom: 1px solid var(--rail); }
+.cols div { flex: 1 1 0; min-width: 0; border-radius: 3px 3px 0 0; background: var(--accent); position: relative; }
+.cols div.rest { background: var(--muted-bar); }
+.colnames { display: flex; gap: 3px; }
+.colnames span { flex: 1 1 0; min-width: 0; font-family: var(--f-mono); font-size: 9.5px; color: var(--ink-3); text-align: center; overflow: hidden; }
+.tries { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.try { border: 1px solid var(--line); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.try .score { font-family: var(--f-display); font-size: 28px; font-weight: 700; line-height: 1; }
+.try .how { font-size: 13.5px; color: var(--ink-2); }
+.try.win { border-color: var(--done); }
+@media (max-width: 640px) { .tries { grid-template-columns: 1fr; } }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+
+  <div class="eyebrow">WeightTrain · 3 models · updated 22 Nov 2026 · all 3 complete · write-ups next</div>
+  <h1>Fixing a small model's thinking loops by editing its weights</h1>
+  <p class="lede">A model is a file of numbers. This model gets stuck repeating itself when it thinks. The blog post showed you can find the few numbers that cause it and flip them, with no training. Here is everything done so far, in the order it happened.</p>
+
+  <div class="tabs" role="tablist" aria-label="Views">
+    <button class="tab" role="tab" id="tab-timeline" aria-controls="panel-timeline" aria-selected="true" data-view="timeline">Timeline</button>
+    <button class="tab" role="tab" id="tab-how" aria-controls="panel-how" aria-selected="false" data-view="how-it-was-found">How the edit was found</button>
+    <button class="tab" role="tab" id="tab-m2" aria-controls="panel-m2" aria-selected="false" data-view="model-2">Model 2 · Qwen3.5-2B</button>
+    <button class="tab" role="tab" id="tab-m3" aria-controls="panel-m3" aria-selected="false" data-view="model-3">Model 3 · MiniCPM5-2B</button>
+  </div>
+
+  <div class="panel" id="panel-timeline" role="tabpanel" aria-labelledby="tab-timeline">
+
+  <div class="strip" aria-label="Stages">
+    <div class="stage"><b>Stage 1</b><span class="t">Original model fails like the post says</span><span class="pill done">Done</span></div>
+    <div class="stage"><b>Stage 2</b><span class="t">Authors' edit fixes it, on this Mac</span><span class="pill done">Done</span></div>
+    <div class="stage"><b>Stage 3</b><span class="t">Find the edit with my own tools</span><span class="pill done">Done</span></div>
+    <div class="stage"><b>Stage 4</b><span class="t">Try to beat the authors' edit</span><span class="pill done">Done · tied</span></div>
+    <div class="stage"><b>Stage 5</b><span class="t">Sealed final test, safety checks, export</span><span class="pill done">Done</span></div>
+  </div>
+
+  <div class="headline">
+    <div class="hn"><div class="v num">8.3%</div><div class="k">original model, correct on 96 math problems</div></div>
+    <div class="hn key"><div class="v num">49.0%</div><div class="k">after the authors' edit, same 96 problems, measured here</div></div>
+    <div class="hn"><div class="v num">0.016%</div><div class="k">of the model's numbers changed to get there</div></div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="phase"><div class="tick"></div><div class="eyebrow">Part A · Understand the edit</div></div>
+
+    <!-- 1 -->
+    <section class="step is-done">
+      <div class="dot">1</div>
+      <div class="card">
+        <div class="card-head"><h2>Read the blog post and keep a copy</h2><span class="pill done">Done</span></div>
+        <p class="plain">Researchers showed that an AI can open another model's weight file, find what makes it misbehave, and fix it by hand.</p>
+        <ul>
+          <li>Post: "Sparks of Weight-Space Programming", MIT CSAIL, 2 Nov 2026. Saved offline in this folder.</li>
+          <li>Their headline: editing 0.016% of Qwen3.5-0.8B's weights stopped its loops. Math score went from 7.9% to 48.1%.</li>
+          <li>Their code and logs are public (MIT / CC BY 4.0). I downloaded them as a reference.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="step is-done">
+      <div class="dot">2</div>
+      <div class="card">
+        <div class="card-head"><h2>Pick the model and set the rules</h2><span class="pill done">Done</span></div>
+        <p class="plain">Start with the smallest model the post fixed, so every result can be checked against theirs.</p>
+        <ul>
+          <li>Model: Qwen3.5-0.8B. 0.75 billion numbers, 1.6 GB. Runs on your M4 Max (36 GB) many times over.</li>
+          <li>Rules in <code>plan.md</code>: no training, no touching the input or output layers, no rescaling whole tensors, no changing how it samples text.</li>
+          <li>Your rules: one model at a time, no clutter, one results folder with report, notes and graphs.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="step is-done">
+      <div class="dot">3</div>
+      <div class="card">
+        <div class="card-head"><h2>Compare the original and edited weight files</h2><span class="pill done">Done</span></div>
+        <p class="plain">Out of 488 blocks of numbers, only 2 changed. In each, 64 "neurons" had their push in one direction reversed and made 5× stronger.</p>
+        <div class="flip" aria-label="What happens to one edited neuron">
+          <div>
+            <h3>Before</h3>
+            <div class="arrowline"><div class="zero"></div><div class="arr" style="left:62.5%;width:7.5%;background:var(--s1)"></div></div>
+            <p class="cap">Neuron pushes the model toward "loop mode" by <b>+1</b></p>
+          </div>
+          <div>
+            <h3>After</h3>
+            <div class="arrowline"><div class="zero"></div><div class="arr" style="left:25%;width:37.5%;background:var(--s2)"></div></div>
+            <p class="cap">Same neuron now pushes away from it by <b>−5</b></p>
+          </div>
+        </div>
+        <ul>
+          <li>Changed: layer 15 and layer 19 of 24, the part that writes each layer's output. 64 of 3,584 neurons in each.</li>
+          <li>Both layers use almost the same "loop direction" (similarity 0.85 out of 1).</li>
+          <li>The authors chose neurons by how much they actually push toward looping while the model runs. That needs the model to be run, not just read.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="step is-done">
+      <div class="dot">4</div>
+      <div class="card">
+        <div class="card-head"><h2>Rebuild their edit with my own tool</h2><span class="pill done">Done</span></div>
+        <p class="plain">My edit tool can recreate their change. It is close enough that the two models pick the same next word every time I checked.</p>
+        <ul>
+          <li><span class="num">99.84%</span> of the stored numbers match their file exactly. The rest are off by rounding.</li>
+          <li>Same next word at <span class="num">64 of 64</span> positions on a test prompt.</li>
+          <li>The tool saves an edit as only the changed columns (0.5 MB), not a new 1.6 GB copy. That keeps your disk clean.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="phase"><div class="tick"></div><div class="eyebrow">Part B · Reproduce their result on this Mac</div></div>
+
+    <!-- 5 -->
+    <section class="step is-done">
+      <div class="dot">5</div>
+      <div class="card">
+        <div class="card-head"><h2>Stage 1: test the original model</h2><span class="pill done">Done · 87 min</span></div>
+        <p class="plain">Gave it 96 math problems with thinking on. It got 8 right. Nearly every other answer got stuck repeating the same text until it hit the length limit.</p>
+        <ul>
+          <li>Same 96 problems and settings as the authors' own run. Up to 32,768 word pieces ("tokens") per answer.</li>
+          <li>88 answers cut off at the limit. 87 of those end in an exact loop.</li>
+          <li>The post's run of the original got 11 of 96. 8 vs 11 is within chance for 96 problems.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="step is-done">
+      <div class="dot">6</div>
+      <div class="card">
+        <div class="card-head"><h2>Stage 2: test the authors' edited model</h2><span class="pill done">Done · 58 min</span></div>
+        <p class="plain">Same 96 problems. It got 47 right. It never looped once. It solved 39 problems the original missed and lost none.</p>
+
+        <div class="chart" role="img" aria-label="Correct answers: original 8.3 percent, post's original 11.5 percent, authors' edit 49.0 percent">
+          <h3>Correct answers, out of 96</h3>
+          <div class="row"><div class="lab">Original (here)</div><div class="track"><div class="bar" style="width:8.3%;background:var(--muted-bar)"></div><span class="bar-val" style="left:8.3%">8.3%</span></div></div>
+          <div class="row"><div class="lab">Original (post's run)</div><div class="track"><div class="bar" style="width:11.5%;background:var(--muted-bar)"></div><span class="bar-val" style="left:11.5%">11.5%</span></div></div>
+          <div class="row"><div class="lab"><b>Authors' edit (here)</b></div><div class="track"><div class="bar" style="width:49%;background:var(--accent)"></div><span class="bar-val" style="left:49%"><b>49.0%</b></span></div></div>
+          <div class="axis"><span></span><div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div></div>
+        </div>
+
+        <div class="chart">
+          <h3>What happened to each answer</h3>
+          <div class="legend"><span><i style="background:var(--s1)"></i>Correct</span><span><i style="background:var(--s2)"></i>Wrong answer</span><span><i style="background:var(--s3)"></i>Finished thinking, no answer</span><span><i style="background:var(--s4)"></i>Cut off at the limit</span></div>
+          <div class="row"><div class="lab">Original</div><div class="stack" role="img" aria-label="Original: 8 correct, 88 cut off">
+            <div class="seg" style="width:8.33%;background:var(--s1)">8</div>
+            <div class="seg dark-text" style="width:91.67%;background:var(--s4)">88 cut off (87 looping)</div></div></div>
+          <div class="row"><div class="lab">Authors' edit</div><div class="stack" role="img" aria-label="Authors' edit: 47 correct, 16 wrong, 14 no answer, 19 cut off">
+            <div class="seg" style="width:48.96%;background:var(--s1)">47</div>
+            <div class="seg" style="width:16.67%;background:var(--s2)">16</div>
+            <div class="seg" style="width:14.58%;background:var(--s3)">14</div>
+            <div class="seg dark-text" style="width:19.79%;background:var(--s4)">19 (0 looping)</div></div></div>
+        </div>
+
+        <div class="tbl"><table>
+          <thead><tr><th></th><th class="n">Original</th><th class="n">Authors' edit</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td>Correct</td><td class="n">8 / 96</td><td class="n">47 / 96</td></tr>
+            <tr><td>Correct, grade-school math (GSM8K)</td><td class="n">9.4%</td><td class="n">50.0%</td></tr>
+            <tr><td>Correct, competition math (MATH)</td><td class="n">7.8%</td><td class="n">48.4%</td></tr>
+            <tr><td>Answers ending in a loop</td><td class="n">87</td><td class="n">0</td></tr>
+            <tr><td>Average answer length (tokens)</td><td class="n">30,411</td><td class="n">18,919</td></tr>
+            <tr><td>Problems gained / lost vs original</td><td class="n">—</td><td class="n">+39 / −0</td></tr>
+          </tbody>
+        </table></div>
+        <p class="why"><strong>What's still wrong after their edit:</strong> 16 wrong answers, 14 that finish thinking but never write an answer, and 19 long honest attempts that hit the limit. Those are the targets for doing better.</p>
+      </div>
+    </section>
+
+    <div class="phase"><div class="tick"></div><div class="eyebrow">Part C · Find the edit myself, then try to beat it</div></div>
+
+    <!-- 7 -->
+    <section class="step is-done">
+      <div class="dot">7</div>
+      <div class="card">
+        <div class="card-head"><h2>Stage 3: find the loop neurons with my own tools ("edit A")</h2><span class="pill done">Done</span></div>
+        <p class="plain">I watched the model's insides while it was still reasoning, then again once it was looping, and took the difference. That points at the same spot the authors found.</p>
+        <ul>
+          <li>Used 8 of the original model's looping answers (46,171 tokens, 14 seconds of compute).</li>
+          <li>My loop direction vs theirs: similarity <span class="num">0.66</span> (layer 15) and <span class="num">0.68</span> (layer 19). Two random directions would score about 0.03.</li>
+          <li>My 16 strongest neurons are all in their 64 for layer 15, and 14 of 16 for layer 19.</li>
+          <li>Built "edit A": my direction, my top 64 neurons per layer, strength 6 (same as theirs).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="step is-done">
+      <div class="dot">8</div>
+      <div class="card">
+        <div class="card-head"><h2>Stage 4: quick check of 6 variants</h2><span class="pill done">Done · ~20 s each</span></div>
+        <p class="plain">A fast stand-in test: show each edited model 6 looping answers it never saw, and ask how much less confident it is in the loop text than in the good reasoning before it. Higher is better.</p>
+        <div class="chart" role="img" aria-label="Selectivity ratio per edit">
+          <h3>Selectivity: drop on loop text ÷ drop on good reasoning</h3>
+          <div class="row"><div class="lab"><b>Authors' edit</b></div><div class="track"><div class="ref" style="left:62.5%"></div><div class="bar" style="width:93.75%;background:var(--accent)"></div><span class="bar-val" style="left:93.75%"><b>1.50</b></span></div></div>
+          <div class="row"><div class="lab">Their direction, my neurons</div><div class="track"><div class="ref" style="left:62.5%"></div><div class="bar" style="width:85.6%;background:var(--muted-bar)"></div><span class="bar-val" style="left:85.6%">1.37</span></div></div>
+          <div class="row"><div class="lab"><b>My edit A</b></div><div class="track"><div class="ref" style="left:62.5%"></div><div class="bar" style="width:82.5%;background:var(--s2)"></div><span class="bar-val" style="left:82.5%"><b>1.32</b></span></div></div>
+          <div class="row"><div class="lab">My direction, their neurons</div><div class="track"><div class="ref" style="left:62.5%"></div><div class="bar" style="width:77.5%;background:var(--muted-bar)"></div><span class="bar-val" style="left:77.5%">1.24</span></div></div>
+          <div class="row"><div class="lab">Edit A, top 32 neurons only</div><div class="track"><div class="ref" style="left:62.5%"></div><div class="bar" style="width:76.25%;background:var(--muted-bar)"></div><span class="bar-val" style="left:76.25%">1.22</span></div></div>
+          <div class="row"><div class="lab">Edit A at half strength</div><div class="track"><div class="ref" style="left:62.5%"></div><div class="bar" style="width:41.25%;background:var(--muted-bar)"></div><span class="bar-val" style="left:41.25%">0.66</span></div></div>
+          <div class="axis"><span></span><div class="ticks"><span>0</span><span>0.4</span><span>0.8</span><span>1.2</span><span>1.6</span></div></div>
+          <p class="cap">Dashed line at 1.0: below it, the edit hurts good reasoning more than loops.</p>
+        </div>
+        <ul>
+          <li>Nothing beats the authors' edit yet. Edit A is stronger but less precise.</li>
+          <li>Strength matters a lot: at half strength the edit does more harm than good.</li>
+          <li>Their direction is the better ingredient. It helps even on my neurons.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="step is-fail">
+      <div class="dot">9</div>
+      <div class="card">
+        <div class="card-head"><h2>Try "matched pairs" to sharpen the direction ("edit M")</h2><span class="pill fail">Tried · did not work</span></div>
+        <p class="plain">Restart the same text many times just before a loop. Some restarts loop, some don't. Comparing those should isolate "loop" from everything else. In practice there were too few usable cases.</p>
+        <ul>
+          <li>128 restarts from 16 starting points. Only <span class="num">3</span> starting points gave both outcomes. The rest always looped or never did.</li>
+          <li>Edit M scored <span class="num">0.36</span> on the quick check. That is worse than every other variant.</li>
+          <li>Decision: stop here and spend the budget on the real accuracy test instead.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="step is-fail">
+      <div class="dot">10</div>
+      <div class="card">
+        <div class="card-head"><h2>Real accuracy test on 64 new problems</h2><span class="pill fail">Done · edit A loses</span></div>
+        <p class="plain">My edit A stops the exact loops, but the model still can't stop thinking. It finds the right answer, then second-guesses it forever. The authors' edit gets nearly twice as many right.</p>
+
+        <div class="chart" role="img" aria-label="Correct on 64 new problems: original 12.5 percent, my edit A 17.2 percent, authors' edit 32.8 percent">
+          <h3>Correct answers, out of 64 new problems</h3>
+          <div class="row"><div class="lab">Original</div><div class="track"><div class="bar" style="width:12.5%;background:var(--muted-bar)"></div><span class="bar-val" style="left:12.5%">12.5%</span></div></div>
+          <div class="row"><div class="lab"><b>My edit A</b></div><div class="track"><div class="bar" style="width:17.2%;background:var(--s2)"></div><span class="bar-val" style="left:17.2%"><b>17.2%</b></span></div></div>
+          <div class="row"><div class="lab"><b>Authors' edit</b></div><div class="track"><div class="bar" style="width:32.8%;background:var(--accent)"></div><span class="bar-val" style="left:32.8%"><b>32.8%</b></span></div></div>
+          <div class="axis"><span></span><div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div></div>
+        </div>
+
+        <div class="tbl"><table>
+          <thead><tr><th></th><th class="n">Original</th><th class="n">My edit A</th><th class="n">Authors' edit</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td>Correct</td><td class="n">8 / 64</td><td class="n">11 / 64</td><td class="n">21 / 64</td></tr>
+            <tr><td>Cut off at 16,384 tokens</td><td class="n">55</td><td class="n">53</td><td class="n">37</td></tr>
+            <tr><td>… ending in an exact loop</td><td class="n">54</td><td class="n">1</td><td class="n">0</td></tr>
+            <tr><td>Gain vs original</td><td class="n">—</td><td class="n">+4.7 pts (noise)</td><td class="n">+20.3 pts</td></tr>
+          </tbody>
+        </table></div>
+        <p class="why"><strong>What edit A's stuck answers look like:</strong> "So the age of the older friend is 38. / Wait. / Wait. / If A=36 and B=38 … / Wait." Each line is slightly different, so it isn't an exact loop, but it never ends. My direction learned "this text repeats". Theirs learned something closer to "this reasoning is going nowhere".</p>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="step is-done">
+      <div class="dot">11</div>
+      <div class="card">
+        <div class="card-head"><h2>Edit M2: a better "stuck" direction</h2><span class="pill done">Done · matches the authors</span></div>
+        <p class="plain">I used the authors' method properly this time: I restarted 40 stuck answers from earlier points, where the model can still go either way, then compared restarts that got stuck with ones that didn't. The result is the closest to the authors' edit so far.</p>
+        <ul>
+          <li>960 restarts, taken 900, 600 and 300 tokens before each loop. <span class="num">18</span> starting points gave both outcomes. The first try (step 9) had 3.</li>
+          <li>Similarity to the authors' direction: <span class="num">0.76</span> (edit A: 0.66). All 16 of its strongest layer-15 neurons are among the authors' 64.</li>
+          <li>The quick check scored it low (0.50). That check rewarded edit A, which then failed on real problems, so I no longer use it to rank edits.</li>
+        </ul>
+        <div class="chart" role="img" aria-label="Correct on 64 new problems: original 12.5, edit A 17.2, authors 32.8, edit M2 39.1 percent">
+          <h3>Correct answers, same 64 new problems</h3>
+          <div class="row"><div class="lab">Original</div><div class="track"><div class="bar" style="width:12.5%;background:var(--muted-bar)"></div><span class="bar-val" style="left:12.5%">12.5%</span></div></div>
+          <div class="row"><div class="lab">My edit A</div><div class="track"><div class="bar" style="width:17.2%;background:var(--muted-bar)"></div><span class="bar-val" style="left:17.2%">17.2%</span></div></div>
+          <div class="row"><div class="lab"><b>Authors' edit</b></div><div class="track"><div class="bar" style="width:32.8%;background:var(--accent)"></div><span class="bar-val" style="left:32.8%"><b>32.8%</b></span></div></div>
+          <div class="row"><div class="lab"><b>My edit M2</b></div><div class="track"><div class="bar" style="width:39.1%;background:var(--s3)"></div><span class="bar-val" style="left:39.1%"><b>39.1%</b></span></div></div>
+          <div class="axis"><span></span><div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div></div>
+        </div>
+        <div class="tbl"><table>
+          <thead><tr><th>M2 compared on the same problems with</th><th class="n">Difference</th><th class="n">Gained / lost</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td>Original</td><td class="n">+26.6 pts</td><td class="n">18 / 1</td><td>Clearly better</td></tr>
+            <tr><td>My edit A</td><td class="n">+21.9 pts</td><td class="n">14 / 0</td><td>Clearly better</td></tr>
+            <tr class="hl"><td>Authors' edit</td><td class="n">+6.2 pts</td><td class="n">8 / 4</td><td>Level: could be luck</td></tr>
+          </tbody>
+        </table></div>
+        <p class="why"><strong>What this means:</strong> my own edit, found from scratch, is now as good as the authors', maybe a bit better, and it gives shorter answers (11,873 tokens on average vs 13,296). To call it better I need about 2× the gap or more problems. The lesson: the shape of the edit was right all along. What mattered was learning the direction from restarts of the same text, and having enough of them.</p>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section class="step is-done">
+      <div class="dot">12</div>
+      <div class="card">
+        <div class="card-head"><h2>Edit M2 on the original 96 problems, full length</h2><span class="pill done">Done · tied</span></div>
+        <p class="plain">This was the last experiment on this model. At full length, M2 and the authors' edit are tied. My edit, found from scratch, matches theirs but doesn't beat it.</p>
+        <div class="chart" role="img" aria-label="Correct on the original 96: original 8.3, authors 49.0, M2 46.9 percent">
+          <h3>Correct answers, original 96 problems, up to 32,768 tokens</h3>
+          <div class="row"><div class="lab">Original</div><div class="track"><div class="bar" style="width:8.3%;background:var(--muted-bar)"></div><span class="bar-val" style="left:8.3%">8.3%</span></div></div>
+          <div class="row"><div class="lab"><b>Authors' edit</b></div><div class="track"><div class="bar" style="width:49%;background:var(--accent)"></div><span class="bar-val" style="left:49%"><b>49.0%</b></span></div></div>
+          <div class="row"><div class="lab"><b>My edit M2</b></div><div class="track"><div class="bar" style="width:46.9%;background:var(--s3)"></div><span class="bar-val" style="left:46.9%"><b>46.9%</b></span></div></div>
+          <div class="axis"><span></span><div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div></div>
+        </div>
+        <ul>
+          <li>Both tests together, 160 problems: M2 got 70 right and the authors' edit 68. Tied.</li>
+          <li>They fail differently. M2 sometimes slips back into a loop on very long answers (5 times). The authors' edit sometimes stops thinking without writing an answer (14 times).</li>
+          <li>Against the original, M2 solved 37 more problems and lost none.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="step is-done">
+      <div class="dot">13</div>
+      <div class="card">
+        <div class="card-head"><h2>Sealed test: M2 locked, tested once on unseen problems</h2><span class="pill done">Passed</span></div>
+        <p class="plain">You agreed an end goal, and M2 was locked. Then it got one try on 256 problems nobody had used: 128 from MATH-500 and 128 from the GSM8K test set. It got four times as many right as the original model.</p>
+        <div class="chart" role="img" aria-label="Sealed test: original 13.3 percent, edit M2 52.3 percent">
+          <h3>Correct answers, 256 unseen problems</h3>
+          <div class="row"><div class="lab">Original</div><div class="track"><div class="bar" style="width:13.3%;background:var(--muted-bar)"></div><span class="bar-val" style="left:13.3%">13.3%</span></div></div>
+          <div class="row"><div class="lab"><b>My edit M2</b></div><div class="track"><div class="bar" style="width:52.3%;background:var(--s3)"></div><span class="bar-val" style="left:52.3%"><b>52.3%</b></span></div></div>
+          <div class="axis"><span></span><div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div></div>
+        </div>
+        <ul>
+          <li>+39.1 points: 102 problems gained, 2 lost. The pass rule needed 2 "standard errors"; it cleared 12.</li>
+          <li>Grade-school math 17% → 70%. Competition math 9% → 34%.</li>
+          <li>Answers ending in a loop: 199 → 0.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="step is-done">
+      <div class="dot">14</div>
+      <div class="card">
+        <div class="card-head"><h2>Safety check and export</h2><span class="pill done">Done · model 1 complete</span></div>
+        <p class="plain">The edit didn't break anything else, and it's saved as a model you can run. The small 4-bit version keeps about 60% of the gain. For this model, the full-size version is the one to use.</p>
+        <div class="tbl"><table>
+          <thead><tr><th>Check</th><th class="n">Original</th><th class="n">Edit M2</th></tr></thead>
+          <tbody>
+            <tr><td>200 general-knowledge questions (MMLU, thinking off)</td><td class="n">48.0%</td><td class="n">48.0%</td></tr>
+            <tr><td>Reading ordinary prose and code</td><td class="n">—</td><td class="n">≤ 1.3% worse</td></tr>
+            <tr><td>64 new math problems, full size</td><td class="n">12.5%</td><td class="n">39.1%</td></tr>
+            <tr class="hl"><td>64 new math problems, 4-bit export (424 MB)</td><td class="n">12.5%</td><td class="n">28.1%</td></tr>
+          </tbody>
+        </table></div>
+        <ul>
+          <li>Export: <code>exports/qwen35-0.8b/m2-mlx-4bit/</code> loads and answers correctly.</li>
+          <li>Shrinking to 4-bit rounds away part of the 128 small column changes, and some loops come back. It still beats the original by 15.6 points.</li>
+          <li>Every must-have in the end goal is met. Next: clean up, then model 2.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 15 -->
+    <section class="step is-done">
+      <div class="dot">15</div>
+      <div class="card">
+        <div class="card-head"><h2>Clean up and start model 2</h2><span class="pill done">Done</span></div>
+        <p class="plain">With your OK, model 1's downloads were deleted. The exported edited model stays. Model 2 has its own tab above.</p>
+        <ul>
+          <li>Kept: <code>exports/qwen35-0.8b/</code> (full size and 4-bit) and all results in <code>runs/qwen35-0.8b/</code>.</li>
+          <li>Deleted: the original and the authors' edited model downloads.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <h2 style="margin-top:8px">Bumps along the way</h2>
+  <div class="bumps" style="margin-top:14px">
+    <div class="bump"><b>Long run crashed after 24 min</b><span class="fx">Too many GPU buffers once answers got very long. Fix: run in separate groups of 16 and save every answer as it finishes, so a crash loses at most one group.</span></div>
+    <div class="bump"><b>GPU ran out of memory</b><span class="fx">Two GPU jobs at once. Fix: one GPU job at a time.</span></div>
+    <div class="bump"><b>Steps paused for minutes at a time</b><span class="fx">The Mac went to sleep even with the keep-awake tool running. The power log shows it waking at 17:50 when you touched it. Fix: keep the lid open and the Mac on power during runs.</span></div>
+    <div class="bump"><b>Graph drew lines backwards in time</b><span class="fx">A resumed run restarts its clock. Fix: plot only the last session.</span></div>
+  </div>
+
+  </div>
+
+  <div class="panel" id="panel-m2" role="tabpanel" aria-labelledby="tab-m2" hidden>
+
+  <div class="strip three" aria-label="Model 2 stages">
+    <div class="stage"><b>Stage 1</b><span class="t">Does the 2B have a defect worth fixing?</span><span class="pill done">Done · yes</span></div>
+    <div class="stage"><b>Stage 2</b><span class="t">Find an edit (at most 3 attempts)</span><span class="pill done">Attempt 1 confirmed</span></div>
+    <div class="stage"><b>Stage 3</b><span class="t">Sealed test, safety check, export</span><span class="pill done">Passed · exported</span></div>
+  </div>
+
+  <div class="headline">
+    <div class="hn"><div class="v num">56.3%</div><div class="k">original 2B correct on the same 64 problems (the 0.8B got 12.5%)</div></div>
+    <div class="hn key"><div class="v num">+9.4</div><div class="k">points from edit attempt 1, on 128 practice problems (13 gained, 1 lost)</div></div>
+    <div class="hn"><div class="v num">13 of 50</div><div class="k">test runs used · 1 of 3 attempts · ~25 of 48 hours used</div></div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="phase"><div class="tick"></div><div class="eyebrow">Attempt 1 · reuse the recipe that worked on model 1</div></div>
+
+    <section class="step is-done">
+      <div class="dot">1</div>
+      <div class="card">
+        <div class="card-head"><h2>Test the original 2B</h2><span class="pill done">Done · 32 min</span></div>
+        <p class="plain">The 2B is much smarter than the 0.8B. When it finishes an answer, it's right 36 times out of 37. It still fails by not finishing: 27 answers ran out of space.</p>
+        <div class="chart">
+          <h3>What happened to each answer, 64 problems, up to 16,384 tokens</h3>
+          <div class="legend"><span><i style="background:var(--s1)"></i>Correct</span><span><i style="background:var(--s2)"></i>Wrong answer</span><span><i style="background:var(--s4)"></i>Cut off at the limit</span></div>
+          <div class="row"><div class="lab">0.8B original</div><div class="stack" role="img" aria-label="0.8B original: 8 correct, 1 wrong, 55 cut off">
+            <div class="seg" style="width:12.5%;background:var(--s1)">8</div>
+            <div class="seg" style="width:1.56%;background:var(--s2)"></div>
+            <div class="seg dark-text" style="width:85.94%;background:var(--s4)">55 cut</div></div></div>
+          <div class="row"><div class="lab"><b>2B original</b></div><div class="stack" role="img" aria-label="2B original: 36 correct, 1 wrong, 27 cut off">
+            <div class="seg" style="width:56.25%;background:var(--s1)">36</div>
+            <div class="seg" style="width:1.56%;background:var(--s2)"></div>
+            <div class="seg dark-text" style="width:42.19%;background:var(--s4)">27 cut</div></div></div>
+        </div>
+        <ul>
+          <li>Only 9 of the 27 are exact loops. The other 18 are near-loops: "Wait" 6 times as often as in correct answers, and repeated phrases twice as often.</li>
+          <li>Same defect as model 1, milder. Upside if fixed: up to about 40 points.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="step is-done">
+      <div class="dot">2</div>
+      <div class="card">
+        <div class="card-head"><h2>Collect more stuck answers</h2><span class="pill done">Done · 77 min</span></div>
+        <p class="plain">9 loops is too few to learn from. So the 2B answered 160 more practice problems, kept separate from the test problems.</p>
+        <ul>
+          <li>96 of 160 right (60%). 62 ran out of space. 16 answers end in an exact loop.</li>
+          <li>Total: 25 looping answers (model 1's fix used 40). The loops start late, around token 11,000.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="step is-done">
+      <div class="dot">3</div>
+      <div class="card">
+        <div class="card-head"><h2>Rewind and replay</h2><span class="pill done">Done · 47 min</span></div>
+        <p class="plain">Each loop was rewound to 900, 600 and 300 tokens before it starts, and replayed 8 times from each point. From the same starting text, some replays get stuck and some keep reasoning.</p>
+        <ul>
+          <li>600 replays: 111 got stuck, 218 kept reasoning, the rest unclear.</li>
+          <li>All 25 loops gave both kinds of replay: 94 matched pairs (model 1 had 80). My worry about too little data didn't happen.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="step is-done">
+      <div class="dot">4</div>
+      <div class="card">
+        <div class="card-head"><h2>Find the "stuck" neurons and flip them</h2><span class="pill done">Done · ~5 min</span></div>
+        <p class="plain">Same as model 1: compare what's inside when it gets stuck and when it doesn't. Then pick the 64 neurons in layers 15 and 19 that push most toward "stuck", and reverse their push.</p>
+        <ul>
+          <li>Like model 1, one neuron per layer does most of the pushing: #6069 in layer 15 and #5108 in layer 19.</li>
+          <li>Changed: 128 of the 2B's 147,456 MLP neurons (6,144 in each of 24 layers). The base model file is untouched.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="step is-done">
+      <div class="dot">5</div>
+      <div class="card">
+        <div class="card-head"><h2>Real test: the same 64 problems, edited vs original</h2><span class="pill done">Passed · narrowly</span></div>
+        <p class="plain">The only test that counts is the model actually answering problems. To pass, the edit must beat the original by at least 2 standard errors, comparing each problem one by one. It cleared 2.18.</p>
+        <div class="chart" role="img" aria-label="Original 56.3 percent, edit attempt 1 65.6 percent">
+          <h3>Correct answers, same 64 problems</h3>
+          <div class="row"><div class="lab">Original</div><div class="track"><div class="bar" style="width:56.3%;background:var(--muted-bar)"></div><span class="bar-val" style="left:56.3%">56.3%</span></div></div>
+          <div class="row"><div class="lab"><b>Edit attempt 1</b></div><div class="track"><div class="bar" style="width:65.6%;background:var(--s3)"></div><span class="bar-val" style="left:65.6%"><b>65.6%</b></span></div></div>
+          <div class="axis"><span></span><div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div></div>
+        </div>
+        <ul>
+          <li>+9.4 points: 7 problems gained, 1 lost. Grade-school math 62.5% → 84.4%; competition math 50.0% → 46.9% (within noise).</li>
+          <li>Answers ending in an exact loop: 9 → 0. The 21 still cut off are second-guessing, not exact loops.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="step is-done">
+      <div class="dot">6</div>
+      <div class="card">
+        <div class="card-head"><h2>Safety check and a second test before locking</h2><span class="pill done">Done · confirmed</span></div>
+        <p class="plain">The first margin was thin and the sealed test runs once, so the same comparison was repeated on 64 new problems. The gain came back exactly: +9.4 points again.</p>
+        <div class="tbl"><table>
+          <thead><tr><th>Check</th><th class="n">Original</th><th class="n">Edit</th></tr></thead>
+          <tbody>
+            <tr><td>First 64 problems</td><td class="n">56.3%</td><td class="n">65.6%</td></tr>
+            <tr><td>64 new problems</td><td class="n">73.4%</td><td class="n">82.8%</td></tr>
+            <tr class="hl"><td>All 128: 13 gained, 1 lost (3.3 standard errors)</td><td class="n">64.8%</td><td class="n">74.2%</td></tr>
+            <tr><td>200 general-knowledge questions</td><td class="n">56.5%</td><td class="n">57.5%</td></tr>
+            <tr><td>Reading ordinary prose / code</td><td class="n">—</td><td class="n">0.6% / 2.1% worse</td></tr>
+          </tbody>
+        </table></div>
+        <ul>
+          <li>Competition math went up on the new set (66% → 78%), so the first set's small dip was noise.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="step is-done">
+      <div class="dot">7</div>
+      <div class="card">
+        <div class="card-head"><h2>Sealed test: locked edit, one try on unseen problems</h2><span class="pill done">Passed</span></div>
+        <p class="plain">You said yes on 20 Nov and attempt 1 was locked. On 256 problems the 2B had never seen, it beat the unedited 2B clearly.</p>
+        <div class="chart" role="img" aria-label="Sealed test: original 65.6 percent, edit 73.4 percent">
+          <h3>Correct answers, 256 unseen problems</h3>
+          <div class="row"><div class="lab">Original</div><div class="track"><div class="bar" style="width:65.6%;background:var(--muted-bar)"></div><span class="bar-val" style="left:65.6%">65.6%</span></div></div>
+          <div class="row"><div class="lab"><b>Edit attempt 1</b></div><div class="track"><div class="bar" style="width:73.4%;background:var(--s3)"></div><span class="bar-val" style="left:73.4%"><b>73.4%</b></span></div></div>
+          <div class="axis"><span></span><div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div></div>
+        </div>
+        <ul>
+          <li>+7.8 points: 31 problems gained, 11 lost. The pass rule needed 2 standard errors; it cleared 3.1.</li>
+          <li>Grade-school math 72% → 84%. Competition math 59% → 63%. Answers ending in a loop: 20 → 0.</li>
+          <li>Exported: full size (4.3 GB) and 4-bit (1.0 GB).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="step is-done">
+      <div class="dot">8</div>
+      <div class="card">
+        <div class="card-head"><h2>Does the fix survive shrinking to 4-bit?</h2><span class="pill done">Done · model 2 complete</span></div>
+        <p class="plain">Shrinking the unedited 2B to 4-bit makes it loop on almost everything. The edit undoes most of that damage: the edited 4-bit file gets four times as many right as the standard 4-bit one.</p>
+        <div class="tbl"><table>
+          <thead><tr><th>64 practice problems</th><th class="n">Original</th><th class="n">Edit</th></tr></thead>
+          <tbody>
+            <tr><td>Full size (4.3 GB)</td><td class="n">56.3%</td><td class="n">65.6%</td></tr>
+            <tr class="hl"><td>4-bit (1.0 GB): 21 gained, 1 lost</td><td class="n">10.9%</td><td class="n">42.2%</td></tr>
+          </tbody>
+        </table></div>
+        <ul>
+          <li>Best to run: the full-size edited model. If memory is tight, the edited 4-bit file beats the standard 4-bit one by a wide margin.</li>
+          <li>Every must-have in the end goal is met for model 2. Next: model 3.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  </div>
+
+  <div class="panel" id="panel-m3" role="tabpanel" aria-labelledby="tab-m3" hidden>
+
+  <div class="strip three" aria-label="Model 3 stages">
+    <div class="stage"><b>Stage 1</b><span class="t">Does it have a defect worth fixing?</span><span class="pill done">Done · yes</span></div>
+    <div class="stage"><b>Stage 2</b><span class="t">Find an edit (at most 3 attempts)</span><span class="pill done">Attempt 3 worked</span></div>
+    <div class="stage"><b>Stage 3</b><span class="t">Sealed test, safety check, export</span><span class="pill done">Passed · exported</span></div>
+  </div>
+
+  <div class="headline">
+    <div class="hn"><div class="v num">33.6%</div><div class="k">original model, coding problems solved on the sealed test (128 unseen)</div></div>
+    <div class="hn key"><div class="v num">52.3%</div><div class="k">after the edit, same 128 problems: 24 gained, 0 lost</div></div>
+    <div class="hn"><div class="v num">2,048</div><div class="k">numbers changed: one row of the output layer</div></div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="phase"><div class="tick"></div><div class="eyebrow">A different model, a different defect</div></div>
+
+    <section class="step is-done">
+      <div class="dot">1</div>
+      <div class="card">
+        <div class="card-head"><h2>Test the original on coding problems</h2><span class="pill done">Done · 60 min</span></div>
+        <p class="plain">MiniCPM5-2B writes Python for contest problems (LiveCodeBench). Its code runs in a locked-down sandbox: no network, no access to your files. It solved every easy problem but almost no hard ones.</p>
+        <ul>
+          <li>21 of 64 practice problems solved. 42 answers ran out of space (16,384 tokens).</li>
+          <li>The surprise: none of the 42 is a loop. The model keeps re-checking its work and never stops thinking. So model 2's loop recipe didn't apply.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="step is-done">
+      <div class="dot">2</div>
+      <div class="card">
+        <div class="card-head"><h2>What if it just stopped thinking?</h2><span class="pill done">Done · ceiling found</span></div>
+        <p class="plain">Each cut-off answer was stopped by hand: its thinking cut short, then the model asked to write the code. 10 of the 42 became correct. So "stop and answer" was worth up to about 10 problems.</p>
+      </div>
+    </section>
+
+    <section class="step is-done">
+      <div class="dot">3</div>
+      <div class="card">
+        <div class="card-head"><h2>Teach one token to fire at the right time</h2><span class="pill done">Done · 3 attempts</span></div>
+        <p class="plain">The model ends its thinking by writing one special token, <code>&lt;/think&gt;</code>. Its score comes from one row of 2,048 numbers in the output layer. Changing that row changes when the model decides to stop. The model's inner state turns out to track how long it has been thinking, so the row can be tuned to fire late in long answers, at the end of a line.</p>
+        <div class="tries">
+          <div class="try"><b>Attempt 1</b><div class="score num">failed</div><div class="how">Fired mid-sentence from the first words. Only line ends had been checked.</div></div>
+          <div class="try"><b>Attempt 2</b><div class="score num">12/64</div><div class="how">Stopped thinking well, then kept firing inside the answer. Score fell from 21.</div></div>
+          <div class="try win"><b>Attempt 3</b><div class="score num">30/64</div><div class="how">Calibrated on thinking and answers. Fires once, late, at a line end. 10 gained, 1 lost.</div></div>
+        </div>
+        <ul>
+          <li>All tuning used a separate set of 25 problems. The 64 practice problems only scored the result.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="step is-done">
+      <div class="dot">4</div>
+      <div class="card">
+        <div class="card-head"><h2>Second run, then the sealed test</h2><span class="pill done">Passed</span></div>
+        <p class="plain">A second practice run with new random draws gave 23 → 29 (6 gained, 0 lost). You said ok on 22 Nov and attempt 3 was locked. On 128 problems used nowhere before, the gain was larger.</p>
+        <div class="chart" role="img" aria-label="Sealed test: original 33.6 percent, edit 52.3 percent">
+          <h3>Coding problems solved, 128 unseen problems</h3>
+          <div class="row"><div class="lab">Original</div><div class="track"><div class="bar" style="width:33.6%;background:var(--muted-bar)"></div><span class="bar-val" style="left:33.6%">33.6%</span></div></div>
+          <div class="row"><div class="lab"><b>Edit attempt 3</b></div><div class="track"><div class="bar" style="width:52.3%;background:var(--s3)"></div><span class="bar-val" style="left:52.3%"><b>52.3%</b></span></div></div>
+          <div class="axis"><span></span><div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div></div>
+        </div>
+        <ul>
+          <li>+18.8 points. The pass rule needed 2 standard errors; it cleared 5.4.</li>
+          <li>Medium 9 → 19 of 30. Hard 4 → 18 of 68. Easy stayed 30 of 30.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="step is-done">
+      <div class="dot">5</div>
+      <div class="card">
+        <div class="card-head"><h2>Safety check and 4-bit export</h2><span class="pill done">Done · model 3 complete</span></div>
+        <div class="tbl"><table>
+          <thead><tr><th>Check</th><th class="n">Original</th><th class="n">Edit</th></tr></thead>
+          <tbody>
+            <tr><td>200 general-knowledge questions</td><td class="n">52.5%</td><td class="n">52.5% (all 200 answers the same)</td></tr>
+            <tr><td>Reading ordinary prose / code</td><td class="n">—</td><td class="n">0.00% / 0.03% worse</td></tr>
+            <tr class="hl"><td>4-bit (1.3 GB), 64 practice problems: 8 gained, 0 lost</td><td class="n">26.6%</td><td class="n">39.1%</td></tr>
+          </tbody>
+        </table></div>
+        <ul>
+          <li>Best to run: the full-size edited model. The 4-bit edited file still beats the standard 4-bit one, but it sometimes writes a stray <code>&lt;/think&gt;</code> (11 of 64 answers).</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  </div>
+
+  <div class="panel" id="panel-how" role="tabpanel" aria-labelledby="tab-how" hidden>
+    <div class="how-intro">
+      <h2>How I knew which numbers to change</h2>
+      <p>Watch the model get stuck. Compare that with the times it doesn't. Find the neurons that push it toward stuck, and reverse them. This is the method behind edit M2, which scored 39.1% on 64 new problems, against 32.8% for the authors' edit.</p>
+    </div>
+
+    <div class="flow">
+
+      <section class="fstep">
+        <div class="dot">1</div>
+        <div class="fcard">
+          <h2>Collect stuck moments</h2>
+          <p class="plain">Take answers where the original model fell into a loop, and mark where each loop starts.</p>
+          <svg class="viz" id="viz-answer" viewBox="0 0 640 74" role="img" aria-label="One answer: varied reasoning, then the same few blocks of text repeating after the loop starts"></svg>
+          <ul>
+            <li>40 looping answers from the original model's run on 96 problems.</li>
+            <li>A loop starts where the text begins repeating word for word. The median start was about 7,000 tokens in.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="fstep">
+        <div class="dot">2</div>
+        <div class="fcard">
+          <h2>Rewind and replay</h2>
+          <p class="plain">Rewind each answer to just before the loop, then let the model continue 8 times from that exact point. Some replays get stuck again. Others keep reasoning.</p>
+          <svg class="viz" id="viz-fan" viewBox="0 0 640 250" role="img" aria-label="The same starting text continued 8 times: 3 replays loop, 5 keep reasoning"></svg>
+          <div class="legend"><span><i style="background:var(--muted-bar)"></i>Same text (rewind point)</span><span><i style="background:var(--s4)"></i>Replay got stuck</span><span><i style="background:var(--s1)"></i>Replay kept reasoning</span></div>
+          <ul>
+            <li>Rewound 900, 600 and 300 tokens before each loop: 120 rewind points, 8 replays each, 960 replays of 300 tokens.</li>
+            <li>Most points were already decided: every replay looped, or none did. <b>18 points</b> gave both outcomes. Only those are used.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="fstep">
+        <div class="dot">3</div>
+        <div class="fcard">
+          <h2>Compare: what's different inside when it gets stuck?</h2>
+          <p class="plain">Same text, same starting point, different outcome. So the difference in the model's inner state between the two kinds of replay is about getting stuck, and little else.</p>
+          <div class="vecs" role="img" aria-label="Average inner state of stuck replays minus that of replays that kept going equals the stuck direction">
+            <div class="vec"><div class="cells" id="vec-a"></div><span>Average inner state, replays that got stuck</span></div>
+            <div class="op">−</div>
+            <div class="vec"><div class="cells" id="vec-b"></div><span>Average inner state, replays that kept going</span></div>
+            <div class="op">=</div>
+            <div class="vec"><div class="cells" id="vec-d"></div><span><b>The "stuck" direction</b></span></div>
+          </div>
+          <p class="cap">Diagram, not real values: each strip shows 16 of the 1,024 numbers that make up the model's inner state.</p>
+          <ul>
+            <li>Measured in layers 15 and 19, the same places the authors edited.</li>
+            <li>The result is close to the authors' own direction: similarity 0.76 (1.0 = identical; two random directions score about 0.03).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="fstep">
+        <div class="dot">4</div>
+        <div class="fcard">
+          <h2>Find which neurons push that way</h2>
+          <p class="plain">Each neuron adds its own column of 1,024 numbers to the inner state whenever it fires. For each one, measure how far it pushes along the "stuck" direction during real stuck moments, then keep the 64 strongest.</p>
+          <div class="chart">
+            <h3>Layer 19: push toward "stuck", strongest 24 of 3,584 neurons (real values)</h3>
+            <div class="cols" id="viz-cols" role="img" aria-label="Neuron 11 pushes 0.113, neuron 1 pushes 0.078, the rest are much smaller"></div>
+            <div class="colnames" id="viz-colnames"></div>
+            <p class="cap">Neuron numbers along the bottom. Two neurons, #11 and #1, do most of the pushing. Another 40 with small pushes were also chosen, and the other 3,520 were left alone. Layer 15 is done the same way.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="fstep">
+        <div class="dot">5</div>
+        <div class="fcard">
+          <h2>Flip them</h2>
+          <p class="plain">In each chosen neuron's column, reverse its push along the "stuck" direction and make it 5× stronger. The rest of the column stays as it was.</p>
+          <div class="flip" aria-label="Layer 19 neuron 1, before and after">
+            <div>
+              <h3>Before · layer 19, neuron #1</h3>
+              <div class="arrowline"><div class="zero" style="left:55%"></div><div class="arr" style="left:55%;width:8.9%;background:var(--s4)"></div></div>
+              <p class="cap">Pushes toward stuck by <b>+0.099</b></p>
+            </div>
+            <div>
+              <h3>After</h3>
+              <div class="arrowline"><div class="zero" style="left:55%"></div><div class="arr" style="left:10.5%;width:44.5%;background:var(--s1)"></div></div>
+              <p class="cap">Pushes away from stuck by <b>−0.494</b></p>
+            </div>
+          </div>
+          <ul>
+            <li>128 columns changed (64 in each layer), about 130,000 numbers. That is 0.017% of the model.</li>
+            <li>The layers (15 and 19), the count (64) and the strength (×−5) copy the authors' recipe. The direction and the neurons are my own.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="fstep">
+        <div class="dot">6</div>
+        <div class="fcard">
+          <h2>Why it took three tries</h2>
+          <p class="plain">Every try used the same steps 4 and 5. What changed was steps 2 and 3: what the "stuck" direction was learned from.</p>
+          <div class="tries">
+            <div class="try"><h3>Edit A</h3><div class="score num">17.2%</div><div class="how">Compared early text with late text of the same answer. It learned "this text repeats". Exact loops stopped, but the model still second-guessed forever.</div></div>
+            <div class="try"><h3>Edit M</h3><div class="score num" style="color:var(--ink-3)">—</div><div class="how">Rewind and replay, but only 3 usable rewind points. Too little data, and the direction came out noisy. Dropped after the quick check, so it was never given the 64-problem test.</div></div>
+            <div class="try win"><h3>Edit M2</h3><div class="score num">39.1%</div><div class="how">Rewind and replay with 18 usable points. Level with the authors' edit (32.8%), maybe slightly better, and its answers are shorter.</div></div>
+          </div>
+          <p class="cap">Scores: correct answers on the same 64 new problems, each answer capped at 16,384 tokens. Original model: 12.5%.</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <footer>
+    <span>All numbers measured on this Mac or read from a named file. Full detail: <code>runs/qwen35-0.8b/REPORT.md</code> and <code>runs/qwen35-2b/REPORT.md</code> and <code>runs/minicpm5-2b/REPORT.md</code>, each with its <code>notes.md</code>.</span>
+    <span>Test runs used: model 1, 26 of 50 · model 2, 13 of 50 · model 3, 18 of 50.</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function txt(parent, x, y, s, cls, anchor) { var t = el("text", { x: x, y: y, "text-anchor": anchor || "start" }, parent); if (cls) t.setAttribute("class", cls); t.textContent = s; return t; }
+
+  // 1. one answer: varied reasoning, then a repeating pattern
+  var a = document.getElementById("viz-answer");
+  if (a) {
+    var widths = [22, 14, 30, 18, 26, 12, 20, 34, 16, 24, 14, 28, 18, 22, 30, 12, 26, 20], x = 0;
+    widths.forEach(function (w) { if (x + w > 380) return; el("rect", { x: x, y: 22, width: w - 2, height: 22, rx: 3, class: "f-reason" }, a); x += w; });
+    var pat = [26, 14, 22, 18], i = 0; x = 392;
+    while (x < 636) { var w = pat[i % 4]; el("rect", { x: x, y: 22, width: Math.min(w - 2, 636 - x), height: 22, rx: 3, class: "f-stuck" }, a); x += w; i++; }
+    el("line", { x1: 388, y1: 16, x2: 388, y2: 50, class: "s-ink3" }, a);
+    txt(a, 388, 10, "loop starts", "t-ink", "middle");
+    txt(a, 0, 64, "reasoning: every part different");
+    txt(a, 636, 64, "the same 4 pieces, over and over", null, "end");
+  }
+
+  // 2. rewind and replay: one prefix, 8 branches
+  var f = document.getElementById("viz-fan");
+  if (f) {
+    var cy = 125;
+    el("rect", { x: 0, y: cy - 9, width: 230, height: 18, rx: 4, class: "f-prefix" }, f);
+    txt(f, 0, cy - 18, "same text up to the rewind point");
+    var kinds = ["r", "s", "r", "r", "s", "r", "s", "r"];
+    kinds.forEach(function (k, j) {
+      var y = 14 + j * 30;
+      el("path", { d: "M232 " + cy + " C 270 " + cy + ", 270 " + y + ", 310 " + y, class: "s-rail" }, f);
+      var xx = 314, n = 0, ws = k === "s" ? [24, 14, 20] : [18, 30, 12, 24, 16, 28, 14, 22, 26, 12];
+      while (xx < 600) { var w = ws[n % ws.length]; el("rect", { x: xx, y: y - 8, width: Math.min(w - 2, 600 - xx), height: 16, rx: 3, class: k === "s" ? "f-stuck" : "f-reason" }, f); xx += w; n++; }
+      txt(f, 608, y + 4, k === "s" ? "stuck" : "ok", k === "s" ? "t-ink" : null);
+    });
+  }
+
+  // 3. schematic vectors (deterministic pseudo-values, labelled as a diagram)
+  function cells(id, vals) {
+    var c = document.getElementById(id); if (!c) return;
+    vals.forEach(function (v) { var i = document.createElement("i"); var s = Math.min(1, Math.abs(v));
+      i.style.background = v >= 0 ? "color-mix(in srgb, var(--s4) " + Math.round(15 + 85 * s) + "%, var(--bg))" : "color-mix(in srgb, var(--s1) " + Math.round(15 + 85 * s) + "%, var(--bg))"; c.appendChild(i); });
+  }
+  var A = [], B = [], D = [], seed = 7;
+  function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280 * 2 - 1; }
+  for (var q = 0; q < 16; q++) { var base = rnd() * 0.7, d = [0, 3, 4, 9, 12].indexOf(q) >= 0 ? 0.55 * (q % 2 ? -1 : 1) : rnd() * 0.08; A.push(base + d / 2); B.push(base - d / 2); D.push(d * 1.6); }
+  cells("vec-a", A); cells("vec-b", B); cells("vec-d", D);
+
+  // 4. real per-neuron push, layer 19 of edit M2 (from edits/mine_m2/localise.json)
+  var vals = [0.1131, 0.0775, 0.0238, 0.0134, 0.0126, 0.0074, 0.0074, 0.0073, 0.0071, 0.0065, 0.0055, 0.0046, 0.0042, 0.0039, 0.0037, 0.0036, 0.0036, 0.0036, 0.0035, 0.0034, 0.0034, 0.0029, 0.0029, 0.0029];
+  var ids = [11, 1, 161, 14, 171, 145, 119, 44, 0, 246, 13, 343, 66, 93, 127, 226, 240, 45, 7, 5, 98, 61, 55, 79];
+  var cols = document.getElementById("viz-cols"), names = document.getElementById("viz-colnames");
+  if (cols && names) vals.forEach(function (v, j) {
+    var b = document.createElement("div"); b.style.height = (v / 0.12 * 100) + "%"; if (j >= 2) b.className = "rest"; b.title = "Neuron " + ids[j] + ": +" + v.toFixed(4); cols.appendChild(b);
+    var s = document.createElement("span"); s.textContent = ids[j]; names.appendChild(s);
+  });
+
+  // tabs, routed on the hash
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  function show(view) {
+    tabs.forEach(function (t) { var on = t.getAttribute("data-view") === view; t.setAttribute("aria-selected", on ? "true" : "false");
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on; });
+  }
+  function fromHash() { var h = (location.hash || "").slice(1); show(h === "how-it-was-found" || h === "model-2" || h === "model-3" ? h : "timeline"); }
+  tabs.forEach(function (t) { t.addEventListener("click", function () { var v = t.getAttribute("data-view"); show(v); try { history.replaceState(null, "", "#" + v); } catch (e) { location.hash = v; } }); });
+  window.addEventListener("hashchange", fromHash);
+  fromHash();
+})();
+</script>

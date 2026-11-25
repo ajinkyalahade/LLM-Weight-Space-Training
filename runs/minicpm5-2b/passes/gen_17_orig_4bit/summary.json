@@ -1,0 +1,31 @@
+{
+ "pass": 17,
+ "type": "generate",
+ "label": "orig_4bit",
+ "model": "scratchpad/orig-4bit",
+ "protocol": "minicpm_code",
+ "max_tokens": 16384,
+ "edit": null,
+ "seed": 0,
+ "batch": 16,
+ "generations": 64,
+ "accuracy": 0.2656,
+ "accuracy_by_source": {
+  "lcb_easy": 0.9333,
+  "lcb_hard": 0.0294,
+  "lcb_medium": 0.1333
+ },
+ "mean_tokens": 13645,
+ "cut_share": 0.7344,
+ "failures": {
+  "wrong_answer": 0,
+  "no_answer_finished": 0,
+  "cut_at_max_tokens": 47
+ },
+ "loop_end_among_cut": 0,
+ "seconds": 3487.4,
+ "tokens_per_second": 250.4,
+ "peak_gb": 21.94,
+ "answers_from_an_earlier_session": 0,
+ "dir": "runs/minicpm5-2b/passes/gen_17_orig_4bit"
+}

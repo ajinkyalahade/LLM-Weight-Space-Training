@@ -1,0 +1,31 @@
+{
+ "pass": 3,
+ "type": "generate",
+ "label": "collect",
+ "model": "models/MiniCPM5-2B",
+ "protocol": "minicpm_code",
+ "max_tokens": 16384,
+ "edit": null,
+ "seed": 1,
+ "batch": 16,
+ "generations": 50,
+ "accuracy": 0.16,
+ "accuracy_by_source": {
+  "lcb_easy": 0.8,
+  "lcb_hard": 0.0,
+  "lcb_medium": 0.0
+ },
+ "mean_tokens": 14297,
+ "cut_share": 0.84,
+ "failures": {
+  "wrong_answer": 0,
+  "no_answer_finished": 0,
+  "cut_at_max_tokens": 42
+ },
+ "loop_end_among_cut": 0,
+ "seconds": 3360.2,
+ "tokens_per_second": 212.7,
+ "peak_gb": 23.32,
+ "answers_from_an_earlier_session": 0,
+ "dir": "runs/minicpm5-2b/passes/gen_3_collect"
+}

@@ -1,0 +1,117 @@
+{
+ "base": "models/Qwen3.5-0.8B",
+ "spec": {
+  "note": "edit A on its top 32 writers only",
+  "edits": [
+   {
+    "tensor": "model.language_model.layers.15.mlp.down_proj.weight",
+    "op": "remove_direction",
+    "columns": [
+     0,
+     25,
+     35,
+     37,
+     38,
+     46,
+     56,
+     61,
+     63,
+     105,
+     129,
+     135,
+     140,
+     215,
+     264,
+     266,
+     294,
+     371,
+     414,
+     426,
+     504,
+     582,
+     738,
+     926,
+     1047,
+     1060,
+     1087,
+     1130,
+     1155,
+     1184,
+     1787,
+     2431
+    ],
+    "strength": 6,
+    "direction": "../mine_a/u_15.npy"
+   },
+   {
+    "tensor": "model.language_model.layers.19.mlp.down_proj.weight",
+    "op": "remove_direction",
+    "columns": [
+     1,
+     5,
+     7,
+     11,
+     13,
+     14,
+     17,
+     34,
+     36,
+     41,
+     44,
+     61,
+     63,
+     66,
+     79,
+     98,
+     101,
+     119,
+     145,
+     149,
+     161,
+     171,
+     246,
+     287,
+     343,
+     512,
+     579,
+     731,
+     795,
+     2248,
+     2514,
+     3343
+    ],
+    "strength": 6,
+    "direction": "../mine_a/u_19.npy"
+   }
+  ]
+ },
+ "result": [
+  {
+   "tensor": "model.language_model.layers.15.mlp.down_proj.weight",
+   "shape": [
+    1024,
+    3584
+   ],
+   "stored_as": "BF16",
+   "changed_values": 32683,
+   "changed_columns": 32,
+   "relative_change": 0.08988,
+   "sha256_before": "ef60d2c687bab19464dca9c8bfd7777e46ad226df0c9e25643b0bab04b5a1cca",
+   "sha256_after": "9670c628711f2e7ac54dc0fb861eefe89e65d9d7a7edc920993ae9878cbdb2f5"
+  },
+  {
+   "tensor": "model.language_model.layers.19.mlp.down_proj.weight",
+   "shape": [
+    1024,
+    3584
+   ],
+   "stored_as": "BF16",
+   "changed_values": 32624,
+   "changed_columns": 32,
+   "relative_change": 0.08794,
+   "sha256_before": "638eedeb701b94aa861f4438e615c07ec6c60ee703db1bfee2de577bb6498c3e",
+   "sha256_after": "915600f8b4f6a7fcd62133fd82123b1979eedef81830ce73e85bd1a4bbc39fb8"
+  }
+ ],
+ "total_changed_values": 65307
+}

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 212" width="720" height="212" role="img" aria-label="What happened to each answer"><style>
+svg{--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;
+    --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--on4:#0b0b0b}
+@media (prefers-color-scheme: dark){svg{--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--muted:#898781;
+    --grid:#2c2c2a;--axis:#383835;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--on4:#ffffff}}
+text{font-family:system-ui, -apple-system, "Segoe UI", sans-serif;fill:var(--ink2);font-size:12px}
+.title{fill:var(--ink);font-size:15px;font-weight:600}.sub{fill:var(--ink2)}.tick{fill:var(--muted);font-size:11px}
+.val{fill:var(--ink);font-size:11px;font-variant-numeric:tabular-nums}.in{fill:#fff;font-size:11px;font-weight:600}
+.in4{fill:var(--on4);font-size:11px;font-weight:600}
+.grid{stroke:var(--grid);stroke-width:1}.axis{stroke:var(--axis);stroke-width:1}.ref{stroke:var(--axis);stroke-width:1}
+.s1{fill:var(--s1)}.s2{fill:var(--s2)}.s3{fill:var(--s3)}.s4{fill:var(--s4)}
+.l1{stroke:var(--s1)}.l2{stroke:var(--s2)}.l3{stroke:var(--s3)}.l4{stroke:var(--s4)}
+.line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.dot{stroke:var(--surface);stroke-width:2}
+</style>
+<rect width="720" height="212" fill="var(--surface)"/>
+<text class="title" x="20" y="28">What happened to each answer</text>
+<text class="sub" x="20" y="47">96 answers per model, same problems, at most 32,768 new tokens each.</text>
+<rect class="s1" x="20" y="60" width="10" height="10" rx="2"/><text x="35" y="69">Correct</text>
+<rect class="s2" x="100.04" y="60" width="10" height="10" rx="2"/><text x="115.04" y="69">Wrong answer</text>
+<rect class="s3" x="213.68" y="60" width="10" height="10" rx="2"/><text x="228.68" y="69">Finished, no answer</text>
+<rect class="s4" x="374.36" y="60" width="10" height="10" rx="2"/><text x="389.36" y="69">Cut off at the token cap</text>
+<text class="val" x="20" y="96" style="font-size:12px">Original (pass 1)</text>
+<rect class="s1" x="21.0" y="104" width="54.7" height="28" rx="4"><title>Original (pass 1) — Correct: 8 answers (8%)</title></rect>
+<text class="in" x="28.0" y="122">8%</text>
+<rect class="s4" x="77.7" y="104" width="621.3" height="28" rx="4"><title>Original (pass 1) — Cut off at the token cap: 88 answers (92%)</title></rect>
+<text class="in4" x="84.7" y="122">92%</text>
+<text class="val" x="20" y="160" style="font-size:12px">Published (pass 10)</text>
+<rect class="s1" x="21.0" y="168" width="330.9" height="28" rx="4"><title>Published (pass 10) — Correct: 47 answers (49%)</title></rect>
+<text class="in" x="28.0" y="186">49%</text>
+<rect class="s2" x="353.9" y="168" width="111.3" height="28" rx="4"><title>Published (pass 10) — Wrong answer: 16 answers (17%)</title></rect>
+<text class="in" x="360.9" y="186">17%</text>
+<rect class="s3" x="467.2" y="168" width="97.2" height="28" rx="4"><title>Published (pass 10) — Finished, no answer: 14 answers (15%)</title></rect>
+<text class="in" x="474.2" y="186">15%</text>
+<rect class="s4" x="566.4" y="168" width="132.6" height="28" rx="4"><title>Published (pass 10) — Cut off at the token cap: 19 answers (20%)</title></rect>
+<text class="in4" x="573.4" y="186">20%</text>
+</svg>

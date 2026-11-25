@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" aria-label="How much each edit lowers the model&#x27;s confidence in the text"><style>
+svg{--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;
+    --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--on4:#0b0b0b}
+@media (prefers-color-scheme: dark){svg{--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--muted:#898781;
+    --grid:#2c2c2a;--axis:#383835;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--on4:#ffffff}}
+text{font-family:system-ui, -apple-system, "Segoe UI", sans-serif;fill:var(--ink2);font-size:12px}
+.title{fill:var(--ink);font-size:15px;font-weight:600}.sub{fill:var(--ink2)}.tick{fill:var(--muted);font-size:11px}
+.val{fill:var(--ink);font-size:11px;font-variant-numeric:tabular-nums}.in{fill:#fff;font-size:11px;font-weight:600}
+.in4{fill:var(--on4);font-size:11px;font-weight:600}
+.grid{stroke:var(--grid);stroke-width:1}.axis{stroke:var(--axis);stroke-width:1}.ref{stroke:var(--axis);stroke-width:1}
+.s1{fill:var(--s1)}.s2{fill:var(--s2)}.s3{fill:var(--s3)}.s4{fill:var(--s4)}
+.l1{stroke:var(--s1)}.l2{stroke:var(--s2)}.l3{stroke:var(--s3)}.l4{stroke:var(--s4)}
+.line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.dot{stroke:var(--surface);stroke-width:2}
+</style>
+<rect width="720" height="380" fill="var(--surface)"/>
+<text class="title" x="20" y="28">How much each edit lowers the model&#x27;s confidence in the text</text>
+<text class="sub" x="20" y="47">Drop in log-probability per token against the original model, on 6 looping answers the edit was not built from.</text>
+<rect class="s1" x="20" y="60" width="10" height="10" rx="2"/><text x="35" y="69">Authors&#x27; edit</text>
+<rect class="s2" x="140.36" y="60" width="10" height="10" rx="2"/><text x="155.36" y="69">My edit A</text>
+<line class="grid" x1="64" x2="700" y1="336.0" y2="336.0"/><text class="tick" x="56" y="340.0" text-anchor="end">0</text>
+<line class="grid" x1="64" x2="700" y1="288.8" y2="288.8"/><text class="tick" x="56" y="292.8" text-anchor="end">0.025</text>
+<line class="grid" x1="64" x2="700" y1="241.6" y2="241.6"/><text class="tick" x="56" y="245.6" text-anchor="end">0.05</text>
+<line class="grid" x1="64" x2="700" y1="194.4" y2="194.4"/><text class="tick" x="56" y="198.4" text-anchor="end">0.075</text>
+<line class="grid" x1="64" x2="700" y1="147.2" y2="147.2"/><text class="tick" x="56" y="151.2" text-anchor="end">0.1</text>
+<line class="grid" x1="64" x2="700" y1="100.0" y2="100.0"/><text class="tick" x="56" y="104.0" text-anchor="end">0.125</text>
+<text class="tick" x="20" y="90">drop</text>
+<path class="s1" d="M198.0,336 V232.8 Q198.0,228.8 202.0,228.8 H218.0 Q222.0,228.8 222.0,232.8 V336 Z"><title>Reasoning text (before the loop) — Authors&#x27; edit: 0.057</title></path><text class="val" x="210.0" y="223.8" text-anchor="middle">0.057</text>
+<path class="s2" d="M224.0,336 V189.0 Q224.0,185.0 228.0,185.0 H244.0 Q248.0,185.0 248.0,189.0 V336 Z"><title>Reasoning text (before the loop) — My edit A: 0.080</title></path><text class="val" x="236.0" y="180.0" text-anchor="middle">0.080</text>
+<text x="223.0" y="354" text-anchor="middle">Reasoning text (before the loop)</text>
+<path class="s1" d="M516.0,336 V179.1 Q516.0,175.1 520.0,175.1 H536.0 Q540.0,175.1 540.0,179.1 V336 Z"><title>Loop text — Authors&#x27; edit: 0.085</title></path><text class="val" x="528.0" y="170.1" text-anchor="middle">0.085</text>
+<path class="s2" d="M542.0,336 V141.2 Q542.0,137.2 546.0,137.2 H562.0 Q566.0,137.2 566.0,141.2 V336 Z"><title>Loop text — My edit A: 0.105</title></path><text class="val" x="554.0" y="132.2" text-anchor="middle">0.105</text>
+<text x="541.0" y="354" text-anchor="middle">Loop text</text>
+<line class="axis" x1="64" x2="700" y1="336" y2="336"/>
+</svg>

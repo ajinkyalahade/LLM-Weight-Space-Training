@@ -1,0 +1,30 @@
+{
+ "pass": 10,
+ "type": "generate",
+ "label": "published",
+ "model": "models/Qwen3.5-0.8B-wsp-published",
+ "protocol": "think35",
+ "max_tokens": 32768,
+ "edit": null,
+ "seed": 0,
+ "batch": 16,
+ "generations": 96,
+ "accuracy": 0.4896,
+ "accuracy_by_source": {
+  "gsm8k": 0.5,
+  "math": 0.4844
+ },
+ "mean_tokens": 18919,
+ "cut_share": 0.1979,
+ "failures": {
+  "wrong_answer": 16,
+  "no_answer_finished": 14,
+  "cut_at_max_tokens": 19
+ },
+ "loop_end_among_cut": 0,
+ "seconds": 3507.2,
+ "tokens_per_second": 517.9,
+ "peak_gb": 8.62,
+ "answers_from_an_earlier_session": 0,
+ "dir": "runs/qwen35-0.8b/passes/gen_10_published"
+}

@@ -1,0 +1,108 @@
+{
+ "pass": 7,
+ "type": "forward",
+ "label": "b_mine_top32",
+ "model": "models/Qwen3.5-0.8B",
+ "edit": "runs/qwen35-0.8b/edits/mine_top32",
+ "request": "request.json.gz",
+ "layers": [
+  15,
+  19
+ ],
+ "tokens": 54507,
+ "cases": [
+  {
+   "name": "gsm8k_train_6653_s0",
+   "tokens": 7268,
+   "mean_logp": -0.45325636863708496,
+   "groups": {
+    "productive": {
+     "tokens": 5882,
+     "mean_logp": -0.49925845861434937
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.0713902935385704
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_967_s0",
+   "tokens": 7771,
+   "mean_logp": -0.46794426441192627,
+   "groups": {
+    "productive": {
+     "tokens": 6435,
+     "mean_logp": -0.5180840492248535
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.08636493980884552
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_6029_s0",
+   "tokens": 8897,
+   "mean_logp": -0.46078380942344666,
+   "groups": {
+    "productive": {
+     "tokens": 7491,
+     "mean_logp": -0.4880993366241455
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.05444233492016792
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_2520_s0",
+   "tokens": 8886,
+   "mean_logp": -0.3549883961677551,
+   "groups": {
+    "productive": {
+     "tokens": 7498,
+     "mean_logp": -0.35782796144485474
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.09628362208604813
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_2805_s0",
+   "tokens": 10401,
+   "mean_logp": -0.5102929472923279,
+   "groups": {
+    "productive": {
+     "tokens": 9031,
+     "mean_logp": -0.5495349168777466
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.06512532383203506
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_3165_s0",
+   "tokens": 11284,
+   "mean_logp": -0.43269023299217224,
+   "groups": {
+    "productive": {
+     "tokens": 9922,
+     "mean_logp": -0.4638456404209137
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.0801306962966919
+    }
+   }
+  }
+ ],
+ "seconds": 38.9,
+ "peak_gb": 4.27,
+ "dir": "runs/qwen35-0.8b/passes/fwd_7_b_mine_top32"
+}

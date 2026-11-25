@@ -1,0 +1,108 @@
+{
+ "pass": 5,
+ "type": "forward",
+ "label": "b_mine_a",
+ "model": "models/Qwen3.5-0.8B",
+ "edit": "runs/qwen35-0.8b/edits/mine_a",
+ "request": "request.json.gz",
+ "layers": [
+  15,
+  19
+ ],
+ "tokens": 54507,
+ "cases": [
+  {
+   "name": "gsm8k_train_6653_s0",
+   "tokens": 7268,
+   "mean_logp": -0.49087128043174744,
+   "groups": {
+    "productive": {
+     "tokens": 5882,
+     "mean_logp": -0.5354864001274109
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.12428978830575943
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_967_s0",
+   "tokens": 7771,
+   "mean_logp": -0.4884002208709717,
+   "groups": {
+    "productive": {
+     "tokens": 6435,
+     "mean_logp": -0.5372619032859802
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.12179021537303925
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_6029_s0",
+   "tokens": 8897,
+   "mean_logp": -0.48510587215423584,
+   "groups": {
+    "productive": {
+     "tokens": 7491,
+     "mean_logp": -0.5130867958068848
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.08175499737262726
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_2520_s0",
+   "tokens": 8886,
+   "mean_logp": -0.3900046646595001,
+   "groups": {
+    "productive": {
+     "tokens": 7498,
+     "mean_logp": -0.39271050691604614
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.14527291059494019
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_2805_s0",
+   "tokens": 10401,
+   "mean_logp": -0.5408737063407898,
+   "groups": {
+    "productive": {
+     "tokens": 9031,
+     "mean_logp": -0.5788338780403137
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.11185579001903534
+    }
+   }
+  },
+  {
+   "name": "gsm8k_train_3165_s0",
+   "tokens": 11284,
+   "mean_logp": -0.4665106534957886,
+   "groups": {
+    "productive": {
+     "tokens": 9922,
+     "mean_logp": -0.4962218999862671
+    },
+    "repetitive": {
+     "tokens": 1000,
+     "mean_logp": -0.13201528787612915
+    }
+   }
+  }
+ ],
+ "seconds": 17.0,
+ "peak_gb": 3.04,
+ "dir": "runs/qwen35-0.8b/passes/fwd_5_b_mine_a"
+}

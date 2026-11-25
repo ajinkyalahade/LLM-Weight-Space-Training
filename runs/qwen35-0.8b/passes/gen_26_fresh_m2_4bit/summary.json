@@ -1,0 +1,30 @@
+{
+ "pass": 26,
+ "type": "generate",
+ "label": "fresh_m2_4bit",
+ "model": "exports/qwen35-0.8b/m2-mlx-4bit",
+ "protocol": "think35",
+ "max_tokens": 16384,
+ "edit": null,
+ "seed": 0,
+ "batch": 16,
+ "generations": 64,
+ "accuracy": 0.2812,
+ "accuracy_by_source": {
+  "gsm8k": 0.4062,
+  "math": 0.1562
+ },
+ "mean_tokens": 11934,
+ "cut_share": 0.4531,
+ "failures": {
+  "wrong_answer": 16,
+  "no_answer_finished": 1,
+  "cut_at_max_tokens": 29
+ },
+ "loop_end_among_cut": 20,
+ "seconds": 1050.0,
+ "tokens_per_second": 727.4,
+ "peak_gb": 5.83,
+ "answers_from_an_earlier_session": 0,
+ "dir": "runs/qwen35-0.8b/passes/gen_26_fresh_m2_4bit"
+}

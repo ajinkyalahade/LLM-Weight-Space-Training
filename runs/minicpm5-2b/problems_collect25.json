@@ -1,0 +1,30 @@
+{
+"note": "MiniCPM5-2B LiveCodeBench v5+v6 stdin problems (data/minicpm5-2b/lcb/problems.jsonl), split by difficulty with random.Random(7) before any run, 2026-11-21: sealed 30/30/68, practice 15/15/34, collect 5/5/15 (easy/medium/hard). This file: collect25.",
+"problems": [
+"lcb_abc375_b",
+"lcb_abc395_b",
+"lcb_abc387_b",
+"lcb_abc379_a",
+"lcb_abc385_a",
+"lcb_abc376_b",
+"lcb_arc189_a",
+"lcb_abc396_c",
+"lcb_abc376_d",
+"lcb_abc387_c",
+"lcb_arc189_d",
+"lcb_abc376_f",
+"lcb_arc195_d",
+"lcb_arc186_e",
+"lcb_arc188_c",
+"lcb_abc396_e",
+"lcb_abc386_d",
+"lcb_abc377_g",
+"lcb_arc194_d",
+"lcb_abc376_g",
+"lcb_abc395_e",
+"lcb_arc193_a",
+"lcb_arc184_c",
+"lcb_abc397_d",
+"lcb_arc184_e"
+]
+}

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" aria-label="Generation speed during the pass"><style>
+svg{--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;
+    --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--on4:#0b0b0b}
+@media (prefers-color-scheme: dark){svg{--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--muted:#898781;
+    --grid:#2c2c2a;--axis:#383835;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--on4:#ffffff}}
+text{font-family:system-ui, -apple-system, "Segoe UI", sans-serif;fill:var(--ink2);font-size:12px}
+.title{fill:var(--ink);font-size:15px;font-weight:600}.sub{fill:var(--ink2)}.tick{fill:var(--muted);font-size:11px}
+.val{fill:var(--ink);font-size:11px;font-variant-numeric:tabular-nums}.in{fill:#fff;font-size:11px;font-weight:600}
+.in4{fill:var(--on4);font-size:11px;font-weight:600}
+.grid{stroke:var(--grid);stroke-width:1}.axis{stroke:var(--axis);stroke-width:1}.ref{stroke:var(--axis);stroke-width:1}
+.s1{fill:var(--s1)}.s2{fill:var(--s2)}.s3{fill:var(--s3)}.s4{fill:var(--s4)}
+.l1{stroke:var(--s1)}.l2{stroke:var(--s2)}.l3{stroke:var(--s3)}.l4{stroke:var(--s4)}
+.line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.dot{stroke:var(--surface);stroke-width:2}
+</style>
+<rect width="720" height="380" fill="var(--surface)"/>
+<text class="title" x="20" y="28">Generation speed during the pass</text>
+<text class="sub" x="20" y="47">All running answers together. Speed falls as the answers get longer.</text>
+<rect class="s1" x="20" y="60" width="10" height="10" rx="2"/><text x="35" y="69">Original</text>
+<rect class="s2" x="106.76" y="60" width="10" height="10" rx="2"/><text x="121.76" y="69">Authors&#x27; edit</text>
+<rect class="s3" x="227.12" y="60" width="10" height="10" rx="2"/><text x="242.12" y="69">My edit A</text>
+<rect class="s4" x="320.6" y="60" width="10" height="10" rx="2"/><text x="335.6" y="69">My edit M2</text>
+<line class="grid" x1="72" x2="692" y1="328.0" y2="328.0"/><text class="tick" x="64" y="332.0" text-anchor="end">0</text>
+<line class="grid" x1="72" x2="692" y1="282.4" y2="282.4"/><text class="tick" x="64" y="286.4" text-anchor="end">200</text>
+<line class="grid" x1="72" x2="692" y1="236.8" y2="236.8"/><text class="tick" x="64" y="240.8" text-anchor="end">400</text>
+<line class="grid" x1="72" x2="692" y1="191.2" y2="191.2"/><text class="tick" x="64" y="195.2" text-anchor="end">600</text>
+<line class="grid" x1="72" x2="692" y1="145.6" y2="145.6"/><text class="tick" x="64" y="149.6" text-anchor="end">800</text>
+<line class="grid" x1="72" x2="692" y1="100.0" y2="100.0"/><text class="tick" x="64" y="104.0" text-anchor="end">1,000</text>
+<text class="tick" x="28" y="90">tokens/s</text>
+<text class="tick" x="382.0" y="364" text-anchor="middle">Minutes since the pass started</text>
+<text class="tick" x="72.0" y="344" text-anchor="middle">0</text>
+<text class="tick" x="278.7" y="344" text-anchor="middle">50</text>
+<text class="tick" x="485.3" y="344" text-anchor="middle">100</text>
+<text class="tick" x="692.0" y="344" text-anchor="middle">150</text>
+<line class="axis" x1="72" x2="692" y1="328.0" y2="328.0"/>
+<path class="line l1" d="M74.1,141.4 L76.1,129.3 L78.2,144.3 L80.3,159.7 L82.3,175.4 L84.4,182.9 L86.5,189.1 L88.5,194.3 L90.6,197.0 L92.7,201.6 L94.7,206.2 L96.8,143.2 L98.9,128.5 L100.9,148.5 L103.0,159.5 L105.1,174.7 L107.1,183.1 L109.2,189.4 L111.3,194.9 L113.3,200.0 L115.4,204.4 L117.5,208.1 L119.5,168.1 L121.6,152.5 L123.7,160.8 L125.7,170.0 L127.8,175.1 L129.9,182.3 L131.9,187.2 L134.0,191.7 L136.1,195.7 L138.1,199.2 L140.2,202.8 L142.3,206.1 L144.3,209.5 L146.4,212.9 L148.5,172.4 L150.5,149.3 L152.6,158.7 L154.7,161.1 L156.7,156.7 L158.8,170.6 L160.9,178.6 L163.0,185.0 L165.1,190.8 L167.1,195.8 L169.2,200.4 L171.3,204.2"><title>Original</title></path><circle class="s1 dot" cx="171.3" cy="204.2" r="5"/><text class="val" x="163.3" y="195.2" text-anchor="end">543</text>
+<path class="line l2" d="M74.1,121.1 L76.1,129.3 L78.2,149.5 L80.3,162.6 L82.3,180.3 L84.4,187.7 L86.5,199.4 L88.5,209.7 L90.6,203.9 L92.7,142.9 L94.7,153.0 L96.8,146.3 L98.9,156.4 L100.9,168.8 L103.0,180.0 L105.1,196.4 L107.1,212.8 L109.2,228.3 L111.3,155.0 L113.3,152.3 L115.4,160.1 L117.5,168.4 L119.5,177.6 L121.6,183.2 L123.7,188.6 L125.7,192.9 L127.8,197.0 L129.9,200.7 L131.9,194.7 L134.0,198.9 L136.1,206.2 L138.1,174.9 L140.2,150.8 L142.3,142.4 L144.3,157.5 L146.4,166.1 L148.5,174.9 L150.5,181.4 L152.6,187.3 L154.7,192.4 L156.7,200.5 L158.8,205.2 L160.9,209.6"><title>Authors&#x27; edit</title></path><circle class="s2 dot" cx="160.9" cy="209.6" r="5"/><text class="val" x="152.9" y="200.6" text-anchor="end">520</text>
+<path class="line l3" d="M74.1,212.3 L76.1,217.1 L78.2,217.5 L80.3,219.7 L82.3,223.7 L84.4,227.8 L86.5,231.4 L88.5,234.9 L90.6,237.4 L92.7,240.8 L94.7,250.3 L159.2,326.7 L161.3,240.9 L163.3,247.4 L165.4,248.3 L167.5,251.0 L169.5,254.0 L171.6,256.6 L173.7,259.0 L175.7,260.8 L177.8,263.2 L179.9,267.4 L200.3,324.4 L270.7,324.6 L272.8,216.2 L337.8,326.3 L339.8,223.8 L341.9,223.2 L344.0,225.1 L346.0,229.6 L348.1,232.9 L350.2,236.0 L352.2,239.3 L354.3,241.5 L356.4,244.1 L358.4,246.2 L360.5,249.4 L362.6,256.3 L433.4,326.5 L435.5,249.0 L437.5,253.4 L439.6,257.2 L441.7,260.3 L443.7,262.4 L445.8,233.2 L447.9,219.2 L449.9,222.8 L452.0,226.8 L454.1,231.0 L456.1,259.2 L458.2,267.6 L486.5,327.4 L488.6,214.8 L490.6,252.6 L555.1,327.7 L557.2,238.3 L603.1,327.7 L605.2,176.4 L607.3,153.4 L609.3,154.2 L611.4,164.7 L613.5,169.9 L615.5,174.9 L617.6,140.9 L619.7,133.4 L621.7,149.0 L623.8,144.6 L625.9,157.3 L627.9,162.9 L630.0,169.9 L632.1,176.0 L634.1,182.3 L636.2,187.2 L638.3,194.4"><title>My edit A</title></path><circle class="s3 dot" cx="638.3" cy="194.4" r="5"/><text class="val" x="630.3" y="185.4" text-anchor="end">586</text>
+<path class="line l4" d="M74.1,107.1 L76.1,107.2 L78.2,130.6 L80.3,158.9 L82.3,200.5 L84.4,234.0 L86.5,174.2 L88.5,118.7 L90.6,137.4 L92.7,154.4 L94.7,175.3 L96.8,186.8 L98.9,203.2 L100.9,210.6 L103.0,157.4 L105.1,151.2 L107.1,148.7 L109.2,148.3 L111.3,160.5 L113.3,175.2 L115.4,185.1 L117.5,193.4 L119.5,202.3 L121.6,206.6 L123.7,217.4 L125.7,216.9 L127.8,156.4 L129.9,146.6 L131.9,162.1 L134.0,172.3 L136.1,183.2 L138.1,193.8 L140.2,201.5 L142.3,207.1 L144.3,215.8 L146.4,214.0 L148.5,239.9 L150.5,243.1 L152.6,224.8"><title>My edit M2</title></path><circle class="s4 dot" cx="152.6" cy="224.8" r="5"/><text class="val" x="144.6" y="215.8" text-anchor="end">453</text>
+</svg>

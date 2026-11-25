@@ -1,0 +1,30 @@
+{
+ "pass": 23,
+ "type": "generate",
+ "label": "holdout_m2",
+ "model": "models/Qwen3.5-0.8B",
+ "protocol": "think35",
+ "max_tokens": 16384,
+ "edit": "runs/qwen35-0.8b/edits/mine_m2",
+ "seed": 0,
+ "batch": 16,
+ "generations": 256,
+ "accuracy": 0.5234,
+ "accuracy_by_source": {
+  "gsm8k": 0.7031,
+  "math": 0.3438
+ },
+ "mean_tokens": 11099,
+ "cut_share": 0.4141,
+ "failures": {
+  "wrong_answer": 16,
+  "no_answer_finished": 0,
+  "cut_at_max_tokens": 106
+ },
+ "loop_end_among_cut": 0,
+ "seconds": 4501.7,
+ "tokens_per_second": 631.2,
+ "peak_gb": 7.68,
+ "answers_from_an_earlier_session": 0,
+ "dir": "runs/qwen35-0.8b/passes/gen_23_holdout_m2"
+}

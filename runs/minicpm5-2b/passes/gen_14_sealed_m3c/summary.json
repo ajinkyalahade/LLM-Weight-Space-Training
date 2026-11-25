@@ -1,0 +1,31 @@
+{
+ "pass": 14,
+ "type": "generate",
+ "label": "sealed_m3c",
+ "model": "models/MiniCPM5-2B",
+ "protocol": "minicpm_code",
+ "max_tokens": 16384,
+ "edit": "runs/minicpm5-2b/edits/m3c",
+ "seed": 0,
+ "batch": 16,
+ "generations": 128,
+ "accuracy": 0.5234,
+ "accuracy_by_source": {
+  "lcb_easy": 1.0,
+  "lcb_hard": 0.2647,
+  "lcb_medium": 0.6333
+ },
+ "mean_tokens": 10591,
+ "cut_share": 0.2969,
+ "failures": {
+  "wrong_answer": 23,
+  "no_answer_finished": 0,
+  "cut_at_max_tokens": 38
+ },
+ "loop_end_among_cut": 0,
+ "seconds": 5786.5,
+ "tokens_per_second": 234.3,
+ "peak_gb": 21.51,
+ "answers_from_an_earlier_session": 0,
+ "dir": "runs/minicpm5-2b/passes/gen_14_sealed_m3c"
+}

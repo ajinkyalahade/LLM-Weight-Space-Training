@@ -1,0 +1,38 @@
+      0 s  wave 1 of 4: 16 answers
+     30 s  done 1/64  tokens 35506   1183.2 tokens/s  running 15 (longest 2221)  peak 2.2 GB
+     60 s  done 2/64  tokens 66526   1034.0 tokens/s  running 14 (longest 4311)  peak 2.8 GB
+     90 s  done 6/64  tokens 93795    908.6 tokens/s  running 10 (longest 6442)  peak 3.0 GB
+    120 s  done 10/64  tokens 117485    789.5 tokens/s  running 6 (longest 9346)  peak 3.0 GB
+    150 s  done 14/64  tokens 134472    566.2 tokens/s  running 2 (longest 13777)  peak 3.0 GB
+    165 s  wave 2 of 4: 16 answers
+    180 s  done 16/64  tokens 152134    588.7 tokens/s  running 16 (longest 779)  peak 3.0 GB
+    210 s  done 17/64  tokens 175470    777.5 tokens/s  running 15 (longest 2271)  peak 3.0 GB
+    240 s  done 18/64  tokens 198163    756.3 tokens/s  running 14 (longest 3827)  peak 3.0 GB
+    270 s  done 18/64  tokens 220241    735.8 tokens/s  running 14 (longest 5404)  peak 3.0 GB
+    300 s  done 19/64  tokens 241665    713.7 tokens/s  running 13 (longest 7006)  peak 3.2 GB
+    330 s  done 23/64  tokens 261875    673.4 tokens/s  running 9 (longest 8822)  peak 3.5 GB
+    360 s  done 27/64  tokens 280303    614.3 tokens/s  running 5 (longest 11081)  peak 3.5 GB
+    390 s  done 27/64  tokens 296498    539.8 tokens/s  running 5 (longest 14320)  peak 3.5 GB
+    411 s  wave 3 of 4: 16 answers
+    420 s  done 32/64  tokens 315752    641.7 tokens/s  running 16 (longest 559)  peak 3.5 GB
+    450 s  done 32/64  tokens 345384    987.4 tokens/s  running 16 (longest 2411)  peak 3.5 GB
+    480 s  done 32/64  tokens 372456    901.9 tokens/s  running 16 (longest 4103)  peak 3.5 GB
+    510 s  done 32/64  tokens 397496    834.2 tokens/s  running 16 (longest 5668)  peak 3.5 GB
+    540 s  done 34/64  tokens 420378    762.6 tokens/s  running 14 (longest 7193)  peak 4.0 GB
+    570 s  done 35/64  tokens 441034    688.4 tokens/s  running 13 (longest 8757)  peak 4.0 GB
+    600 s  done 36/64  tokens 460860    660.7 tokens/s  running 12 (longest 10405)  peak 4.0 GB
+    630 s  done 36/64  tokens 479604    624.7 tokens/s  running 12 (longest 11967)  peak 4.0 GB
+    660 s  done 36/64  tokens 497388    592.6 tokens/s  running 12 (longest 13449)  peak 4.0 GB
+    690 s  done 37/64  tokens 514014    553.9 tokens/s  running 11 (longest 14924)  peak 5.1 GB
+    719 s  wave 4 of 4: 16 answers
+    720 s  done 48/64  tokens 529967    531.6 tokens/s  running 16 (longest 58)  peak 5.1 GB
+    750 s  done 49/64  tokens 559670    990.0 tokens/s  running 15 (longest 1980)  peak 5.1 GB
+    780 s  done 49/64  tokens 586250    885.9 tokens/s  running 15 (longest 3752)  peak 5.1 GB
+    810 s  done 49/64  tokens 610340    802.9 tokens/s  running 15 (longest 5358)  peak 5.1 GB
+    840 s  done 49/64  tokens 633350    766.7 tokens/s  running 15 (longest 6892)  peak 5.1 GB
+    870 s  done 49/64  tokens 654785    714.4 tokens/s  running 15 (longest 8321)  peak 5.1 GB
+    900 s  done 50/64  tokens 675145    678.4 tokens/s  running 14 (longest 9719)  peak 5.1 GB
+    930 s  done 50/64  tokens 694493    644.5 tokens/s  running 14 (longest 11101)  peak 5.1 GB
+    960 s  done 50/64  tokens 712987    616.3 tokens/s  running 14 (longest 12422)  peak 5.1 GB
+    990 s  done 51/64  tokens 730732    591.5 tokens/s  running 13 (longest 13696)  peak 5.8 GB
+   1020 s  done 52/64  tokens 747598    562.1 tokens/s  running 12 (longest 15039)  peak 5.8 GB
