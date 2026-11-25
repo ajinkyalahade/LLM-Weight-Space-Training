@@ -19,8 +19,8 @@ models under fixed rules, and each locked edit was tested once on problems it ha
 - The edits survive MLX 4-bit export and still beat the unedited 4-bit models.
 - 4 of 7 own edit attempts failed; all are reported. The edits don't make models smarter: they let them finish.
 
-Full write-up: [`writeup/paper/paper.md`](writeup/paper/paper.md) (APA paper, also `paper_APA.docx`), figures in
-[`writeup/figures/`](writeup/figures/).
+Figures and every number behind them: [`writeup/figures/`](writeup/figures/). The paper is in preparation and
+available from the author on request.
 
 ## How the edits work
 
@@ -39,7 +39,7 @@ Full write-up: [`writeup/paper/paper.md`](writeup/paper/paper.md) (APA paper, al
 wsp/                 all code: generation, grading, sandbox, probing, editing, statistics, graphs
 runs/<model>/        REPORT.md (results), notes.md (dated lab notebook), passes.jsonl (every test run),
                      edits/<id>/ (each edit: manifest + changed weights), graphs/, passes/*/summary.json
-writeup/             paper and figures (make_figures.py, facts.json)
+writeup/figures/     figures for the paper (make_figures.py, facts.json)
 data/                problem lists and sealed-set definitions
 plan.md              the rules and end goal, fixed before testing
 DATA.md              files not in the repo (models, raw answers, datasets) and how to get them
