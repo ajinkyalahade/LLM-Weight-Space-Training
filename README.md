@@ -2,6 +2,8 @@
 
 Fixing small reasoning models by editing their weights directly: no training, no gradients, one laptop.
 
+**Paper:** [Patching the Weights: Direct Edits Fix Non-Terminating Reasoning in Three Small Language Models](https://github.com/ajinkyalahade/LLM-Weight-Space-Training/blob/main/paper_APA.docx) (APA, .docx)
+
 Small reasoning models often fail by never finishing: they loop, or keep re-checking until the token budget runs out.
 Following [*Sparks of Weight-Space Programming*](https://rikiyat.github.io/blog/weight-space-programming/)
 (Takehi, Teoh, Zhang & Khattab, MIT CSAIL, 2026), an AI coding agent (Claude Code) diagnosed and edited three open
