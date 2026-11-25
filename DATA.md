@@ -4,7 +4,7 @@ This repository holds the code (`wsp/`), the plan (`plan.md`), each model's repo
 (`runs/<model>/`), the edit files themselves (`runs/<model>/edits/`), and the write-up (`writeup/`).
 
 The files below were left out because they are large, can be rebuilt, or belong to someone else. If you want to
-review any of them, contact the author: **[contact: add how people should reach you]**.
+review any of them, contact the author: **ajinkyalahade@outlook.com**.
 
 ## Available from the author on request
 
