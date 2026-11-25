@@ -17,9 +17,16 @@ models under fixed rules, and each locked edit was tested once on problems it ha
 | Qwen3.5-2B | math, 256 problems | 65.6% | **73.4%** | 31 / 11 | 3.1 SE | 262,144 (2 MLP layers) |
 | MiniCPM5-2B | code, 128 problems | 33.6% | **52.3%** | 24 / 0 | 5.4 SE | 2,048 (one output row) |
 
+![Sealed-test accuracy, original vs edited, for the three models](writeup/figures/fig1_sealed_accuracy.png)
+
 - No measurable harm: MMLU-200 moved by at most 1 point; perplexity on prose and code by at most 2%.
 - The edits survive MLX 4-bit export and still beat the unedited 4-bit models.
 - 4 of 7 own edit attempts failed; all are reported. The edits don't make models smarter: they let them finish.
+
+Every edit we tested, as a problem-by-problem difference from its own original (bars ±2 SE; squares are the sealed
+tests):
+
+![Forest plot of every edit tested against its original](writeup/figures/fig2_forest.png)
 
 Paper (APA): [`paper_APA.docx`](paper_APA.docx). Figures and every number behind them:
 [`writeup/figures/`](writeup/figures/).
@@ -34,6 +41,26 @@ Paper (APA): [`paper_APA.docx`](paper_APA.docx). Figures and every number behind
   regularized linear discriminants of the final hidden state ("about to finish" and "late in a long thinking"). The
   model already tracks how long it has been thinking; the edit links that signal to the token that ends the thinking.
   It had to be calibrated on line ends, line interiors and the answer section, or it fired in the wrong places.
+
+What the MiniCPM5-2B edit adds to the `</think>` score, by position in the thinking: it grows with elapsed length at
+line ends and stays low inside lines and in the answer.
+
+![The model 3 edit reads a length signal already present in the model](writeup/figures/fig5_mechanism.png)
+
+## More results
+
+What happened to each sealed-test answer: the edits turn answers cut off at the token cap into finished answers.
+
+![Outcome of each sealed-test answer, original vs edited](writeup/figures/fig3_outcomes.png)
+
+Answer lengths on the sealed tests, shortest first. A flat top at 16,384 tokens means the answer was cut off.
+
+![Answer lengths on the sealed tests](writeup/figures/fig4_lengths.png)
+
+At 4-bit (MLX), the edited models still beat the unedited 4-bit models. For Qwen3.5-2B, 4-bit conversion alone breaks
+the unedited model, and the edit recovers most of it.
+
+![Practice accuracy at full precision and at 4-bit](writeup/figures/fig6_quantization.png)
 
 ## What is here
 
