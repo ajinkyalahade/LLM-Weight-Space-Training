@@ -19,8 +19,8 @@ models under fixed rules, and each locked edit was tested once on problems it ha
 - The edits survive MLX 4-bit export and still beat the unedited 4-bit models.
 - 4 of 7 own edit attempts failed; all are reported. The edits don't make models smarter: they let them finish.
 
-Figures and every number behind them: [`writeup/figures/`](writeup/figures/). The paper is in preparation and
-available from the author on request.
+Paper (APA): [`paper_APA.docx`](paper_APA.docx). Figures and every number behind them:
+[`writeup/figures/`](writeup/figures/).
 
 ## How the edits work
 
