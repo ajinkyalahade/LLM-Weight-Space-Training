@@ -17,6 +17,10 @@ weight-space-programming/
 
 data/qwen35-0.8b/harm/prose.txt
 
+# Drafts kept local only
+writeup/blog/
+writeup/social/
+
 # Large data, available on request (see DATA.md)
 data/minicpm5-2b/lcb/problems.jsonl
 runs/*/acts/
